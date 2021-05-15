@@ -27,7 +27,7 @@ PARA O PÚBLICO EM GERAL QUE FOR SOMENTE VISUALIZAR, BASTA ACESSAR O APLICATIVO 
 
 ## 🛠️ Construído com
 
-* [Javascript Puro](https://www.javascript.com/)
+* [Javascript Puro](https://www.javascript.com/) - Linguagem Base
 * [PHP](https://www.php.net/) - Usado no WebService para comunicação com o Banco de Dados
 * [MySQL](https://www.mysql.com/) - Banco de Dados
 
@@ -39,7 +39,6 @@ PARA O PÚBLICO EM GERAL QUE FOR SOMENTE VISUALIZAR, BASTA ACESSAR O APLICATIVO 
 ## 🎁 Expressões de gratidão
 
 * Obrigado publicamente 🤓.
-* etc.
 
 
 ---
