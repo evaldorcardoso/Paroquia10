@@ -1,99 +1,46 @@
 # Paroquia10
 
-Um parágrafo da descrição do projeto vai aqui
+Um verdadeiro Informativo Digital!
 
 ## 🚀 Começando
 
-Essas instruções permitirão que você obtenha uma cópia do projeto em operação na sua máquina local para fins de desenvolvimento e teste.
-
-Consulte **Implantação** para saber como implantar o projeto.
+Paróquia10 é um aplicativo PWA feito para congregações/igrejas que desejam ter um informativo digital com seus eventos de forma simples e rápida.
 
 ### 📋 Pré-requisitos
 
-De que coisas você precisa para instalar o software e como instalá-lo?
+O que você precisa para instalá-lo? Nada ele já está rodando em um servidor próprio! 
+Para começar a usar e cadastrar os eventos de sua congregação é necessário entrar em contato com o Desenvolvedor (Enviar email para evaldorcardoso@outlook.com) para criar os dados de acesso da Congregação, após isso será gerado um usuário e senha para acesso de sua congregação para que você possa cadastrar e atualizar os eventos, depois disso basta divulgar para as pessoas começarem a usar e visualizar os eventos de sua Congregação!
 
-```
-Dar exemplos
-```
+ATENÇÃO! OS PASSOS ABAIXOS SÃO NECESSÁRIOS SOMENTE PARA QUEM FOR CADASTRAR OS EVENTOS COM UMA CONTA JÁ CRIADA. 
+PARA O PÚBLICO EM GERAL QUE FOR SOMENTE VISUALIZAR, BASTA ACESSAR O APLICATIVO DE QUALQUER NAVEGADOR DE INTERNET PELO ENDEREÇO: https://paroquia10.com
 
-### 🔧 Instalação
+### 🔧 Acesso da Congregação
 
-Uma série de exemplos passo-a-passo que informam o que você deve executar para ter um ambiente de desenvolvimento em execução.
+#Acessar pelo navegador o seguinte endereço: https://paroquia10.com
+#Clicar no menu superior na direita e ir em “ENTRAR”.
+#Preencher as dados da congregação (Email e Senha previamente cadastrados) e clicar em “Entrar”.
+#Após isso serão mostrados os eventos da Congregação, com opções para cadastrar um novo, editar ou excluir.
+#Os eventos com datas que já passaram não serão exibidos para o público em geral e ficam com um ícone vermelho de aviso.
+#Ao clicar em “Adicionar novo evento” ou no Editar (ícone do lápis na direita), será exibida a tela de cadastro do evento, basta preencher as informações que forem necessárias e clicar em “Salvar” logo abaixo. (Obs.: Nem todos os campos são obrigatórios, preencha de acordo com o evento)
 
-Diga como essa etapa será:
 
-```
-Dar exemplos
-```
-
-E repita:
-
-```
-Até finalizar
-```
-
-Termine com um exemplo de como obter dados do sistema ou como usá-los para uma pequena demonstração.
-
-## ⚙️ Executando os testes
-
-Explicar como executar os testes automatizados para este sistema.
-
-### 🔩 Analise os testes de ponta a ponta
-
-Explique que eles verificam esses testes e porquê.
-
-```
-Dar exemplos
-```
-
-### ⌨️ E testes de estilo de codificação
-
-Explique que eles verificam esses testes e porquê.
-
-```
-Dar exemplos
-```
-
-## 📦 Desenvolvimento
-
-Adicione notas adicionais sobre como implantar isso em um sistema ativo
 
 ## 🛠️ Construído com
 
-Mencione as ferramentas que você usou para criar seu projeto
+* [Javascript Puro](https://www.javascript.com/)
+* [PHP](https://www.php.net/) - Usado no WebService para comunicação com o Banco de Dados
+* [MySQL](https://www.mysql.com/) - Banco de Dados
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - O framework web usado
-* [Maven](https://maven.apache.org/) - Gerente de Dependência
-* [ROME](https://rometools.github.io/rome/) - Usada para gerar RSS
-
-## 🖇️ Colaborando
-
-Por favor, leia o [COLABORACAO.md](https://gist.github.com/usuario/linkParaInfoSobreContribuicoes) para obter detalhes sobre o nosso código de conduta e o processo para nos enviar pedidos de solicitação.
-
-## 📌 Versão
-
-Nós usamos [SemVer](http://semver.org/) para controle de versão. Para as versões disponíveis, observe as [tags neste repositório](https://github.com/suas/tags/do/projeto). 
 
 ## ✒️ Autores
 
-Mencione todos aqueles que ajudaram a levantar o projeto desde o seu início
-
-* **Um desenvolvedor** - *Trabalho Inicial* - [umdesenvolvedor](https://github.com/linkParaPerfil)
-* **Fulano De Tal** - *Documentação* - [fulanodetal](https://github.com/linkParaPerfil)
-
-Você também pode ver a lista de todos os [colaboradores](https://github.com/usuario/projeto/colaboradores) que participaram deste projeto.
-
-## 📄 Licença
-
-Este projeto está sob a licença (sua licença) - veja o arquivo [LICENSE.md](https://github.com/usuario/projeto/licenca) para detalhes.
+* **Desenvolvedor** - *Projeto Inicial* - [Evaldo R Cardoso](https://github.com/evaldorcardoso)
 
 ## 🎁 Expressões de gratidão
 
-* Conte a outras pessoas sobre este projeto 📢
-* Convide alguém da equipe para uma cerveja 🍺 
 * Obrigado publicamente 🤓.
 * etc.
 
 
 ---
-⌨️ com ❤️ por [Armstrong Lohãns](https://gist.github.com/lohhans) 😊
+⌨️ com ❤️ por [Evaldo R Cardoso](https://github.com/evaldorcardoso) 😊
