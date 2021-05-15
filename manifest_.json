@@ -1,0 +1,16 @@
+{
+  "short_name": "Paróquia 10",
+  "name": "Seu Informativo Digital",
+  "icons": [
+    {
+      "src":"/images/icon_512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "https://paroquia10.com/index.html",
+  "orientation": "portrait",
+  "background_color": "#fff",
+  "Theme_color": "#d81b60",
+  "display": "standalone"
+}

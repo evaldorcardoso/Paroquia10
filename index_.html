@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>Paroquia10</title>	
+	<link href="css/bootstrap.min.css" rel="stylesheet">
+	<link href="css/style.css" rel="stylesheet">
+  <link href="css/table.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/profile_header.css" rel="stylesheet">
+  <link href="css/navbar.css" rel="stylesheet">
+  <link href="css/mais.css" rel="stylesheet">
+  <link href="css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="css/login-form.css">
+  <script src="jquery.js"></script>
+  <link rel="manifest" href="/manifest.json">
+  
+  <style type="text/css">
+    body{
+        background-color:#eee;
+    }
+  </style>
+</head>
+	<body id="body">
+
+    <!-- MODAL reseta Senha  -->
+    <div class="row">
+      <div class="modal fade" id="modalResetaSenha" tabindex="3" role="dialog" aria-labelledby="contactLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="panel panel-primary">
+            <div class="panel-heading">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">x</button>
+              <h4 class="panel-title" id="contactLabel"><span class="glyphicon glyphicon-user"></span> Cadastre uma senha:</h4>
+            </div>
+            <form id="resetasenha_form" accept-charset="utf-8">
+              <div class="modal-body" style="padding: 5px;">
+                <h4>Você precisa cadastrar uma nova senha</h4>
+                <div class="row">
+                  <div class="col-lg-2 col-md-2 col-sm-2" style="padding-bottom: 10px;">
+                    <span class="help-block">Código:</span>
+                    <input type="text" class="form-control" name="id_reseta" id="id_reseta" disabled/>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-6" style="padding-bottom: 10px;">
+                    <span class="help-block">Nova Senha:</span>
+                    <input type="password" class="form-control" name="senha_reseta" id="senha_reseta"/>
+                  </div>
+                </div><br><br>
+                <center><div id='statusReseta' style="display: none"><img src="images/giphy.gif" style="height: 20px;margin-top: 5px;margin-bottom: 10px"></div></center>
+              </div>  
+              <div class="modal-footer">
+                <div class="pull-right">
+                  <!--<input type="submit" name="salvar" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Salvar</input>-->
+                  <button  type="button" class="btn btn-default btn-close" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> Fechar</button>
+                  <button id="butreseta" type="button" class="btn btn-primary" onclick="reseta_senha();"><span class="glyphicon glyphicon-floppy-disk"></span> Salvar</button>
+                </div>
+              </div>
+            </form>
+          </div><!-- /.panel -->
+        </div><!-- /.modal-dalog -->
+      </div><!-- /.modal -->
+    </div>
+
+    <div id="notificacao_ok" class="noty_bar noty_type__success noty_theme__unify--v1 g-mb-25" style="display: none">
+        <div class="noty_body row">
+          <div class="col-xs-11">
+            <div class="noty_body__icon">
+              <!--<i class="fa fa-info-circle" style="margin-right: 10px"></i>-->
+              <div id="mensagem_notificacao_ok">AQUI VAI A MENSAGEM</div>
+            </div>
+          </div>
+          <div class="col-xs-1 noty_close_button" onclick="_('notificacao_ok').style.display='none';">×</div>
+        </div>
+    </div>
+
+    <div id="notificacao_erro" class="noty_bar noty_type__error noty_theme__unify--v1 g-mb-25" style="display: none">
+        <div class="noty_body row">
+          <div class="col-xs-11">
+            <div class="noty_body__icon">
+              <!--<i class="fa fa-info-circle" style="margin-right: 10px"></i>-->
+              <div id="mensagem_notificacao_erro">AQUI VAI A MENSAGEM</div>
+            </div>
+          </div>
+          <div class="col-xs-1 noty_close_button" onclick="_('notificacao_erro').style.display='none';">×</div>
+        </div>
+    </div>
+
+    <div id="div-app" style="display:none;padding-top: 50px;margin-top: 20px;">
+      <nav class="navbar navbar-inverse navbar-fixed-top animate">
+        <div class="container navbar-more visible-xs"></div>
+          <div class="container">
+            <ul id="ul_navbar" class="nav navbar-nav navbar-right mobile-bar">
+              <li id="tab_inicio" class="active">
+                <a href="javascript:void(0);" onclick="tab('inicio')" style="color: #fff">
+                  <span class="menu-icon fa fa-home"></span>
+                  Início
+                </a>
+              </li>
+              <li id="tab_info">
+                <a href="javascript:void(0);" onclick="tab('novidades')" style="color: #fff">
+                  <span class="menu-icon fa fa-calendar"></span>
+                  <span class="visible-xs"></span>
+                  Novidades
+                </a>
+              </li>
+              <!--<li id="tab_localizacao">
+                <a href="javascript:void(0);" onclick="tab('localizacao')" style="color: #fff">
+                  <span class="menu-icon fa fa-map-marker">
+                    <span id="count_naolidas" class="badge badge-info" style="display: none">1</span>
+                  </span>
+                  Localização
+                </a>
+              </li>-->
+              <li id="tab_mais">
+                <a href="javascript:void(0);" onclick="tab('mais')" style="color: #fff">
+                  <span class="menu-icon fa fa-info"></span>
+                  Sobre
+                </a>
+              </li>
+            </ul>
+          </div>
+      </nav>
+
+      <div id="alert-app" class="alert alert-info alert-autocloseable-info"></div>
+      <div id="div-main">
+        <div style="height: 100%;">
+          <section id="congregacao_local" class="panel panel-default" style="margin-bottom: 0px">
+            <div class="panel-app" style="height: 50px;" onclick="muda_congregacao();">
+              <center style="padding-top: 10px;">Alterar</center>
+            </div>
+            <!--<div class="panel-app" id="congregacao_selecionada">Eventos da:</div>-->
+            <header class="panel-heading"  style="background-color: white">
+              <div class="row">
+                <div class="col-xs-3">
+                  <div class=""><img src="images/congregacao.png" style="width: 50px"></div>
+                </div>
+                <div class="col-xs-9">
+                  <h2 class="panel-title elipsis" id="local_nome" style="font-weight: 700;color: black"></h2>
+                  <p id="local_local"></p>
+                </div>
+              </div>
+            </header>
+          </section>
+        </div>
+        <center><div id="status_agenda" style="display: none"><img src="images/giphy.gif" style="height: 20px;margin-top: 5px"></div>
+          
+        </center>
+        <div id="div-wall-agenda">
+          <!--AQUI VÃO OS EVENTOS-->
+        </div>
+        <div id="div-evento-agenda" style="display: none">
+          <!-- projects -->
+          <section class="panel panel-default">
+            <header class="panel-heading">
+              <div class="row">
+                <div class="col-xs-8">
+                  <h2 class="panel-title elipsis" id="modal_titulo" style="font-weight: 700;color: black"></h2>
+                </div>
+                <div class="col-xs-4" id="modal_data">
+                  
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                <p id="modal_local"></p>
+                </div>
+              </div>
+            </header>
+            <div class="panel-body noradius padding-10">
+              <div class="row">
+                <div class="col-xs-3">
+                  <div class="message-avatar" id="modal_departamento"><!-- AQUI VAI A IMAGEM--></div>
+                </div>
+                <div class="col-xs-9">
+                  <p id="modal_descricao"></p>
+                </div>
+              </div><br>
+              
+              <hr>
+              <ul class="bullet-list list-unstyled" id="modal_culto">
+                <li class="red">
+                  <h3>Recepção:</h3>
+                  <span class="text-gray size-12" id="modal_recepcao"></span>
+                </li>
+                <li class="green">
+                  <h3>Café:</h3>
+                  <span class="text-gray size-12" id="modal_cafe"></span>
+                </li>
+                <li class="blue">
+                  <h3>Música:</h3>
+                  <span class="text-gray size-12" id="modal_musica"></span>
+                </li>
+                <li class="orange">
+                  <h3>Flores Altar:</h3>
+                  <span class="text-gray size-12" id="modal_flores"></span>
+                </li>
+                <li class="red">
+                  <h3>Santa Ceia Auxiliar:</h3>
+                  <span class="text-gray size-12" id="modal_santaceia"></span>
+                </li>
+                <li class="green">
+                  <h3>Santa Ceia Distribuição:</h3>
+                  <span class="text-gray size-12" id="modal_santaceia_distribuicao"></span>
+                </li>
+                <li class="blue">
+                  <h3>Leitores:</h3>
+                  <span class="text-gray size-12" id="modal_leitores"></span>
+                </li>
+              </ul>
+            </div>
+            <div class="panel-footer">
+              <button onclick="document.getElementById('div-wall-agenda').style.display='block';document.getElementById('div-evento-agenda').style.display='none';window.scrollTo(0,(scrollposition*8));" type="button" class="btn btn-danger">Fechar</button>
+            </div>
+          </section>
+          <!-- /projects -->
+        </div>
+      </div>
+
+      <div id="div-posts" style="display:none">
+        <center><div id="status_posts"><img src="images/giphy.gif" style="height: 20px;"></div>
+          <div class="panel-app" id="posts-panel-app">Buscando, aguarde... </div>
+        </center>
+        <div id="div-wall">
+          <!--AQUI VÃO AS POSTAGENS-->
+        </div>
+      </div>
+      
+      <div id="div-mais" style="display: none">
+        <div class="row">
+          <div class="callout-bubble text-center fade-in-b">
+            <img src="images/icone.png" style="width:100%"><br><br>
+            <p style="color:#62748F;margin-left: 15px;margin-right: 15px;font-weight:bold">Um verdadeiro Informativo Digital!</p>
+            <p style="text-align: center;margin-left: 20px;margin-right: 15px;color:#62748F">Veja as funcionalidades:<br><br>
+              -Visualizar notícias e novidades das congregações.<br>
+              -Visualizar a agenda completa de cultos, reuniões, estudos, etc... de sua congregação.<br>
+              -Visualizar o local, os auxiliares e horário dos eventos.<br>
+              -Abrir o mapa para obter a localização dos eventos.<br>
+            </p>
+          </div>
+        </div><br>
+        <center><a class="btn-primary" href="#" onclick="abrelogin();" style="padding: 10px;color: white"> Acessar painel</a></center>
+        <br>
+        <div class="row">
+        <center><div>
+          <p style="font-size: 100%;color: #072d52">Paróquia10 © 2018<br><br><a href="http://www.evaldorc.com.br" target="_blank"><img src="http://www.evaldorc.com.br/assets/images/marca_b.png"></a></p>
+        </div></center>
+        </div>
+      </div>
+      <br>
+
+    </div><!--fecha div-app-->
+    <div id="div-app-localizacao" style="display: block">
+      <div id="div-local">
+        <div class="callout-bubble text-center fade-in-b" style="background-color: white;">
+          <img src="images/icone.png" style="width:50%"><br><br>
+        </div>
+        <center>
+          <div id="status_congregacao"><img src="images/giphy.gif" style="height: 15px;margin-top: 0px;"></div>
+        </center>
+        <!--<section id="congregacao_local" class="panel panel-default" style="margin-bottom: 0px">
+            <div class="panel-app" id="congregacao_selecionada">Congregação selecionada:</div>
+            <header class="panel-heading"  style="background-color: white">
+              <div class="row">
+                <div class="col-xs-12">
+                  <h2 class="panel-title elipsis" id="local_nome" style="font-weight: 700;color: black">Nome da Congregação</h2>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-12">
+                <p id="local_local"></p>
+                </div>
+              </div>
+            </header>
+            <div class="panel-body noradius padding-10">
+              <div class="row">
+                <div class="col-xs-3">
+                  <div class=""><img src="images/congregacao.png"></div>
+                </div>
+                <div class="col-xs-9">
+                  <p id="local_descricao"></p>
+                </div>
+              </div><br>
+            </div>
+        </section>-->
+        <center><div class="panel-app">Selecione uma congregação:</div></center>
+        <div id="div-wall-congregacoes" style="width:100%;height:300px;overflow-y:scroll;position: initial/*absolute*/;">
+        </div>
+        <center style="color: #62748F;">Não encontrou a sua?<a href="http://paroquia10.esy.es/admin/create.php" style="color: #62748F"> Criar conta</a><br>
+          <a href="#" onclick="abrelogin();">Entrar</a></center>
+      </div>
+    </div>
+    <div id="div-app-login" style="display: none;">
+      <div class="login-body" style="margin-top: 100px">
+        <article class="container-login center-block">
+        <section>
+          <ul id="top-bar" class="nav nav-tabs nav-justified">
+            <!--<li class="active"><a href="#login-access">Accesso</a></li>-->
+            <!--<li><a href="#">Password dimenticata</a></li>-->
+            <img style="width:300px;margin-bottom:20px;margin-left: 20%;" src="http://paroquia10.esy.es/images/logo/LOGO_TRANSPARENTE.png"/>
+          </ul>
+          <div class="tab-content tabs-login col-lg-12 col-md-12 col-sm-12 cols-xs-12">
+            <div id="login-access" class="tab-pane fade active in">
+              <h2><i class="glyphicon glyphicon-log-in"></i> Acesso</h2>           
+              <form id="login_form" accept-charset="utf-8" autocomplete="off" role="form" class="form-horizontal">
+                <div class="form-group ">
+                  <label for="login" class="sr-only">Email</label>
+                      <input type="text" class="form-control" name="login_value" id="login_value" placeholder="Email" tabindex="1" value=""/>
+                </div>
+                <div class="form-group ">
+                  <label for="password" class="sr-only">Senha</label>
+                    <input type="password" class="form-control" name="senha_value" id="senha_value"
+                      placeholder="Senha" value="" tabindex="2" />
+
+                </div>
+                <br/>
+                <div class="form-group ">       
+                  <button type="submit" name="log-me-in" id="submit" tabindex="5" class="btn btn-lg btn-primary" style="background-color:  #e04971;color: white">Entrar</button><br><br>
+                  <center><a href="#" style="color:white" onclick="muda_congregacao();">Voltar</a></center>
+                </div>
+                <center><div id="status_login" style="display: none"><img src="images/giphy.gif" style="height: 20px;margin-top: 5px;margin-bottom: 10px"></div></center>
+              </form>     
+            </div>
+          </div>
+          <?php 
+        }
+        ?>
+        </section>
+        </article>
+      </div>
+    </div>
+
+    
+  <div id="codigo" style="display: none"></div><!--id da congregação escolhida pelo usuario-->
+  <div id="congregacao" style="display: none"></div><!--id da congregação escolhida pelo usuario-->
+  <div id="conectado" style="display: none">0</div><!--id da congregação escolhida pelo usuario-->
+	</body>
+  <script src="js/bootstrap.min.js" type="text/javascript"></script>
+  <script type="text/javascript" src="js/funcoes_gerais.js"></script>
+  <script type="text/javascript" src="js/paroquia.js" ></script>
+	<script type="text/javascript">
+    var scrollposition=0;
+    var intervalo='';
+		$(document).ready(function(){  
+      $('.alert-autocloseable-info').hide();
+      $("form :input").value='';
+
+      /* global PullToRefresh */
+      PullToRefresh.init({
+        mainElement: '#div-app',
+        onRefresh: function(){ 
+          if(_("div-app").style.display=='block')
+          {
+            if(document.getElementById("div-main").style.display=='block')
+            {
+              if(_('codigo').innerHTML!='')
+                lista_eventos(_('codigo').innerHTML)
+              else
+              {
+                 _("div-app-localizacao").style.display='block';
+                _("div-app").style.display='none';
+                lista_congregacoes();
+              }
+            }
+            if(document.getElementById("div-posts").style.display=='block')
+            {
+              lista_posts();
+            }
+            if(document.getElementById("div-app-localizacao").style.display=='block')
+            {
+              lista_congregacoes();
+            }
+          }
+        },
+        iconRefreshing: '<img src="images/giphy.gif" width="15">'
+      });
+      
+      //initDB();
+      lista_congregacoes();
+
+      $('#login_form').submit(function () {
+        entrar();
+        return false;
+      });
+    });
+
+    function entrar()
+    {
+      var login=document.getElementById('login_value').value;
+      var senha=document.getElementById('senha_value').value;
+        
+      if(login=='')
+      {
+        _('mensagem_notificacao_erro').innerHTML='Informe um email válido!';
+        _('notificacao_erro').style.display='block';
+      }
+      else
+      {
+        var queryString="username="+login+"&senha="+senha;
+        //alert(queryString);
+        document.getElementById("submit").style.display='none';
+        document.getElementById("status_login").style.display='block';
+        var jqxhr = $.getJSON("http://paroquia10.esy.es/paroquiaws/index.php?funcao=login_app&login="+login+"&senha="+senha, function(message) {
+        })
+        .done(function(message) {
+          _('notificacao_ok').style.display='none';
+          _('notificacao_erro').style.display='none';
+          message.forEach(function(us){
+          window.location.replace("admin.html?id_congregacao="+us['id_congregacao']);
+          });
+        })
+        .fail(function(message) {
+          _('mensagem_notificacao_erro').innerHTML=decodeURI(message['responseText'].trim());
+          _('notificacao_erro').style.display='block';
+          _('notificacao_ok').style.display='none';
+          document.getElementById("submit").style.display='block';
+          document.getElementById("status_login").style.display='none';
+        });
+        jqxhr.complete(function(message) {
+          //alert(JSON.stringify(message));
+          var resposta=decodeURI(message['responseText'].trim());
+          _('mensagem_notificacao_ok').innerHTML=resposta;
+          if(resposta.indexOf("reseta_senha")!=-1)  
+          {
+            $('#modalResetaSenha').modal('show');
+            var index=resposta.indexOf('=');
+            index=resposta.substring(index+1);
+            $('#id_reseta').val(index);
+          }
+          else
+          {
+            _('notificacao_ok').style.display='block';
+            _('notificacao_erro').style.display='none';
+          }
+          document.getElementById("submit").style.display='block';
+          document.getElementById("status_login").style.display='none';
+        });
+      }
+    }
+
+    function reseta_senha()
+    {
+      var id=document.getElementById('id_reseta').value;
+      var senha=document.getElementById('senha_reseta').value;
+      var login=document.getElementById('login_value').value;
+      if(senha=='')
+      {
+        _('mensagem_notificacao_erro').innerHTML='Informe uma senha!';
+        _('notificacao_erro').style.display='block';
+      }
+      else
+      {
+        var queryString="id="+id+"&senha="+senha+"&reseta_senha=0&username="+login;
+        //alert(queryString);
+        document.getElementById("butreseta").style.display='none';
+        document.getElementById("statusReseta").style.display='block';
+        var jqxhr = $.getJSON("http://paroquia10.esy.es/paroquiaws/index.php?funcao=reseta_app&id="+id+"&senha="+senha+"&reseta_senha=0&username="+login, function(message) {
+        })
+        .done(function(message) {
+          $('#modalResetaSenha').modal('hide');
+          _('notificacao_ok').style.display='none';
+          _('notificacao_erro').style.display='none';
+          message.forEach(function(us){
+          window.location.replace("admin.html?id_congregacao="+us['id_congregacao']);
+          });
+        })
+        .fail(function(message) {
+          _('mensagem_notificacao_erro').innerHTML=decodeURI(message['responseText'].trim());
+          _('notificacao_erro').style.display='block';
+          _('notificacao_ok').style.display='none';
+          document.getElementById("submit").style.display='block';
+          document.getElementById("status_login").style.display='none';
+        });
+        jqxhr.complete(function(message) {
+          //alert(JSON.stringify(message));
+          var resposta=decodeURI(message['responseText'].trim());
+          _('mensagem_notificacao_ok').innerHTML=resposta;
+          if(resposta.indexOf("reseta_senha")!=-1)  
+          {
+            $('#modalResetaSenha').modal('show');
+            var index=resposta.indexOf('=');
+            index=resposta.substring(index+1);
+            $('#id_reseta').val(index);
+          }
+          else
+          {
+            _('notificacao_ok').style.display='block';
+            _('notificacao_erro').style.display='none';
+          }
+          document.getElementById("submit").style.display='block';
+          document.getElementById("status_login").style.display='none';
+        });
+      }
+    }
+
+    function abrevermais(valor)
+    {
+      document.getElementById('div-wall-agenda').style.display='none';
+      document.getElementById('div-evento-agenda').style.display='block'; 
+      //location.href="evento.html";
+      //var elmt=document.getElementById('evento_'+valor);
+      scrollposition=window.pageYOffset;
+      //alert(scrollposition);
+      return false;
+    }
+
+    function abrelogin()
+    {
+      _("div-app-login").style.display='block';
+      _("div-app").style.display='none';
+      _("div-app-localizacao").style.display='none';
+    }
+
+    function seleciona_congregacao(id_congregacao,nome_congregacao)
+    {
+      _("codigo").innerHTML=id_congregacao;
+      //_("congregacao").innerHTML=nome_congregacao;
+      _("div-app-localizacao").style.display='none';
+      _("div-app").style.display='block';
+      tab('inicio'); 
+    }
+
+    function muda_congregacao()
+    {
+      _("codigo").innerHTML='';
+      _('congregacao').innerHTML='';
+      _('local_nome').innerHTML='';
+      _('local_local').innerHTML = '';
+      _("div-app-localizacao").style.display='block';
+      _("div-app-login").style.display='none';
+      _("div-app").style.display='none';
+      _('notificacao_erro').style.display='none';
+      //tab('inicio');  
+    }
+
+    $(document).on('click', '.vermais', function () {
+        _('modal_flores').innerHTML = '';
+        _('modal_recepcao').innerHTML = '';
+        _('modal_cafe').innerHTML = '';
+        _('modal_musica').innerHTML = '';
+        _('modal_santaceia').innerHTML = '';
+        _('modal_santaceia_distribuicao').innerHTML = '';
+        _('modal_leitores').innerHTML = '';
+
+        if (typeof $(this).data('flores') !== 'undefined') 
+          _('modal_flores').innerHTML = $(this).data('flores')
+
+        if (typeof $(this).data('recepcao') !== 'undefined') 
+          _('modal_recepcao').innerHTML = $(this).data('recepcao')
+
+        if (typeof $(this).data('cafe') !== 'undefined') 
+          _('modal_cafe').innerHTML = $(this).data('cafe')
+
+        if (typeof $(this).data('musica') !== 'undefined') 
+          _('modal_musica').innerHTML = $(this).data('musica')
+
+        if (typeof $(this).data('santaceia') !== 'undefined') 
+          _('modal_santaceia').innerHTML = $(this).data('santaceia')
+
+        if (typeof $(this).data('santaceia_distribuicao') !== 'undefined') 
+          _('modal_santaceia_distribuicao').innerHTML = $(this).data('santaceia_distribuicao')
+
+        if (typeof $(this).data('leitores') !== 'undefined') 
+          _('modal_leitores').innerHTML = $(this).data('leitores')
+
+        if (typeof $(this).data('departamento') !== 'undefined') 
+        {
+            if($(this).data('departamento')=='0')
+                _('modal_culto').style.display='block';
+            else
+                _('modal_culto').style.display='none';
+
+            switch($(this).data('departamento')) 
+            {
+                case 0:
+                    _('modal_departamento').innerHTML = '<img src="images/culto.png">';
+                    break;
+                case 1:
+                    _('modal_departamento').innerHTML = '<img src="images/reuniao.png">';
+                    break;
+                case 2:
+                    _('modal_departamento').innerHTML = '<img src="images/estudo.png">';
+                    break;
+                case 3:
+                    _('modal_departamento').innerHTML = '<img src="images/escola_biblica.png">';
+                    break;
+                case 4:
+                    _('modal_departamento').innerHTML = '<img src="images/jovens.png">';
+                    break;
+                case 5:
+                    _('modal_departamento').innerHTML = '<img src="images/leigos.png">';
+                    break;
+                case 6:
+                    _('modal_departamento').innerHTML = '<img src="images/servas.png">';
+                    break;
+                default:
+                    _('modal_departamento').innerHTML = '<img src="images/evento.png">';
+                    break;
+            }
+        }
+
+        if (typeof $(this).data('titulo') !== 'undefined') 
+          _('modal_titulo').innerHTML = $(this).data('titulo')
+
+        if (typeof $(this).data('descricao') !== 'undefined') 
+          _('modal_descricao').innerHTML = $(this).data('descricao')
+
+        if (typeof $(this).data('data') !== 'undefined') 
+        {
+          if($(this).data('data').indexOf("Hoje") != -1)
+            _('modal_data').innerHTML = '<span style="float: right;font-size: 85%;text-align: right;background: #07b107;border-radius: 20px;color: white;padding: 4px;font-weight:600;">'+$(this).data('data')+'</span>';
+          else
+            _('modal_data').innerHTML = '<span style="float: right;font-size: 85%;text-align: right;font-weight:600;">'+$(this).data('data')+'</span>';
+        }
+        if (typeof $(this).data('lat') !== 'undefined')
+        {
+          _('modal_local').innerHTML = '<span class="menu-icon fa fa-map-marker bigger-125" style="color: #072d52;"></span><a href="google.navigation:q='+$(this).data('lat')+','+$(this).data('lon')+'">  '+$(this).data('nome')+'-'+$(this).data('localidade')+'</a>';
+        }
+        //else
+        //{
+          _('modal_local').innerHTML = _('modal_local').innerHTML+'<br><span class="" style="color: #072d52;"></span>  '+$(this).data('endereco');
+        //}
+        window.scrollTo(500, 0);
+        return false;
+    });
+
+    function dataAtualFormatada(valor){
+        //var data = new Date(valor);
+        var dateParts = valor.split("-");
+        var data = new Date(dateParts[0], dateParts[1] - 1, dateParts[2].substr(0,2));
+        var dia = data.getDate();
+        if (dia.toString().length == 1)
+            dia = "0"+dia;
+        var mes = data.getMonth()+1;
+        if (mes.toString().length == 1)
+            mes = "0"+mes;
+        var ano = data.getFullYear();  
+
+        var d = new Date(valor);
+        var mi=d.getMonth();
+        d=d.getDate()+1;
+        var h = new Date();
+        var mh=h.getMonth();
+        h=h.getDate();
+        if((d==h)&&(mi==mh))
+          return 'Hoje';
+        else
+          return dia+"/"+mes+"/"+ano;
+    }
+
+    function diaSemana(valor){
+        //alert(valor);
+        var semana = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+        //var arr = valor.split("/").reverse();
+        //var teste = new Date(arr[0], arr[1] - 1, arr[2]);
+        //var dia = teste.getDay();
+        var dateParts = valor.split("-");
+        var dt = new Date(dateParts[0], dateParts[1] - 1, dateParts[2].substr(0,2));
+        var dia = dt.getDay();
+        return(semana[dia]);
+    }
+
+    function nomeMes(valor){
+        var arrayMes = new Array(12);
+        arrayMes[0] = "Jan";
+        arrayMes[1] = "Fev";
+        arrayMes[2] = "Mar";
+        arrayMes[3] = "Abr";
+        arrayMes[4] = "Mai";
+        arrayMes[5] = "Jun";
+        arrayMes[6] = "Jul";
+        arrayMes[7] = "Ago";
+        arrayMes[8] = "Set";
+        arrayMes[9] = "Out";
+        arrayMes[10] = "Nov";
+        arrayMes[11] = "Dez";
+        //var data = new Date(valor);
+        var dateParts = valor.split("-");
+        var data = new Date(dateParts[0], dateParts[1] - 1, dateParts[2].substr(0,2));
+        var mes = data.getMonth();
+        var ano = data.getFullYear(); 
+        return arrayMes[mes]+'/'+ano;
+    }
+
+    function inputcadastro(e)
+    {
+      if(isNumber(e.value.substring(1,2)))
+      {
+        mascaraMutuario(e,Telefone)
+      }
+      else
+      {
+        minuscula(e);
+      }
+    }
+
+    function mascaraMutuario(o,f){
+    //alert('formata');
+    v_obj=o
+    v_fun=f
+    setTimeout('execmascara()',1)
+    }
+
+    function execmascara(){
+    v_obj.value=v_fun(v_obj.value)
+    }
+
+    function minuscula(z){
+      v = z.value.toLowerCase();
+      z.value = v;
+    }
+
+
+    function Telefone(v){
+ 
+      v=v.replace(/\D/g,"") 
+
+      v=v.replace(/(\d{0})(\d)/,"$1($2")
+
+      v=v.replace(/(\d{2})(\d)/,"$1)$2")
+
+      v=v.replace(/(\d{5})(\d)/,"$1-$2")
+
+      return v
+    }
+
+    function valida(e)
+    {
+      if(isNumber(e.value.substring(1,2)))
+      {
+        var conteudo=apenasNumeros(e.value)
+        //alert(conteudo.toString().length);
+        if(conteudo.toString().length<10)//telefone incorreto
+        {
+          _('alert-app').innerHTML='Informe seu Telefone corretamente!';
+          $('#alert-app').show();
+          $('#alert-app').delay(6000).fadeOut( "slow", function() {
+          });
+        }
+        else if(conteudo.toString().length==10)//telefone correto maneira antiga, adiciona o 9 na frente
+        {
+          conteudo=conteudo.toString().substr(0,2)+'9'+conteudo.toString().substr(2,conteudo.toString().length);
+          //alert(conteudo);
+          e.value=conteudo;
+          mascaraMutuario(e,Telefone);
+        }
+        else
+        {
+          _('status_login').innerHTML='';
+        }
+      }
+      else
+      {
+        if(!(validacaoEmail(e.value)))
+        {
+          _('alert-login').innerHTML='Informe seu E-mail corretamente!';
+          $('#alert-login').show();
+          $('#alert-login').delay(6000).fadeOut( "slow", function() {
+          });
+        }
+        else
+          _('status_login').innerHTML='';
+      }
+    }
+
+    function apenasNumeros(string) 
+    {
+      var numsStr = string.replace(/[^0-9]/g,'');
+      return parseInt(numsStr);
+    }
+
+    function tab(tab)
+    {
+      switch(tab)
+      {
+        case "inicio":
+          //lista_eventos(_('codigo').innerHTML);
+          lista_congregacao(_('codigo').innerHTML);
+          document.getElementById('div-mais').style.display='none';
+          document.getElementById('div-posts').style.display='none';
+          document.getElementById('div-main').style.display='block';
+          $('#tab_info').removeClass('active');
+          $('#tab_mais').removeClass('active');
+          $('#tab_inicio').addClass('active');
+        break;
+        case "novidades":          
+          document.getElementById('div-main').style.display='none';
+          document.getElementById('div-posts').style.display='block';
+          document.getElementById('div-mais').style.display='none';
+          $('#tab_inicio').removeClass('active');
+          $('#tab_mais').removeClass('active');
+          $('#tab_info').addClass('active');
+          lista_posts();
+        break;
+        case "mais":
+          document.getElementById('div-mais').style.display='block';
+          document.getElementById('div-main').style.display='none';
+          document.getElementById('div-posts').style.display='none';
+          $('#tab_inicio').removeClass('active');
+          $('#tab_mais').addClass('active');
+          $('#tab_info').removeClass('active');
+        break;
+      }
+    }
+
+    function isNumber(n) {
+      return !isNaN(parseFloat(n)) && isFinite(n);
+    }
+
+    function lista_posts(){
+      var content='';
+      //var imagem='images/events-icon-orange-.png';
+      document.getElementById("status_posts").style.display='block';
+      var jqxhr = $.getJSON("http://paroquia10.esy.es/paroquiaws/index.php?funcao=lista_posts", function(message) {
+        })
+        .done(function(message) {
+          //content='<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1">';
+          message.forEach(function(post){
+            content+='<div class="row"><div class="col-xs-12"><div class="panel panel-white post" style="margin-bottom:0px;height:100px"><div class="row"><div class="col-xs-4" style="float:left;height:100px"><div class="pull-left image" style="background-color:#FFFFFF;overflow: hidden;position:relative;width:100%;"><div class="card-background" style="height:100%"><a href="post.html?id='+post['id']+'"><img src="';
+            content+='http://paroquia10.esy.es/'+post['imagem'];
+            content+='" class="img" style="margin-left:0px;margin-top:0px;height:97px;"></a></div></div></div>';
+            content+='<div class="col-xs-8" style="margin-left:-20px"><div class="pull-left meta"><div class="title h5" style="color:#62748F;"><a href="post.html?id='+post['id']+'"><b style="color:#62748F;">';
+            content+=post['titulo']; 
+            content+='</b></a></div>';
+            //content+='</div></div></div>';
+            content+='<div class="text-muted time" style="color:#62748F;">'+post['nome']+'</div>';
+            content+='<div class="text-muted time" style="color:#62748F;font-size:80%;">Postado em: ';
+            //content+=post['conteudo']+'...';
+            //content+='<br><br>';
+            /*content+='<h6 class="text-muted time">';*/
+            content+=dataAtualFormatada(post['data']);
+            //content+='<span class="glyphicon glyphicon-time" aria-hidden="true"></span></h6>';*/
+            content+='</div></div></div></div></div></div></div>';
+          });
+       
+        })
+        .fail(function(message) {
+          //_('alert-app').innerHTML='Não foi possível atualizar as postagens, verifique a sua conexão ou tente mais tarde!';
+          //$('#alert-app').show();
+          //$('#alert-app').delay(6000).fadeOut( "slow", function() {
+          document.getElementById("status_posts").style.display='none';
+          });
+        jqxhr.complete(function(message) {
+          //document.getElementById("status_posts").innerHTML='';
+          if(content=='')
+            content='';
+          else
+            content+='</div></div>';
+          document.getElementById("div-wall").innerHTML= content;
+          document.getElementById("status_posts").style.display='none';
+          document.getElementById("posts-panel-app").innerHTML='Mural de Novidades!';
+          //msgs_naolidas();
+        });
+    };  
+
+    function lista_eventos(congregacao){
+      var content='';
+      var ultimo_dia='';
+      var estilo='default';
+      var estilo_painel='widget-color-grey';
+      var imagem='images/events-icon-orange-.png';
+      document.getElementById("status_agenda").style.display='block';
+      var jqxhr = $.getJSON("http://paroquia10.esy.es/paroquiaws/index.php?funcao=lista_eventos_congregacao&id_congregacao="+congregacao, function(message) {
+        })
+        .done(function(message) {
+          /*content='<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1">';*/
+          content='<div class="container"><div class="row"><div class="col-xs-12" style="padding-right:0px;padding-left:0px;"><div class="chat_container"><div class="job-box"><div class="inbox-message"><ul>';
+          message.forEach(function(evento){
+            content+='<li><a id="evento_'+evento['id']+'" class="vermais" onclick="abrevermais('+evento['id']+');" data-titulo="'+evento['titulo']+'" data-descricao="'+evento['descricao']+'" data-flores="'+evento['flores']+'" data-cafe="'+evento['cafe']+'" data-musica="'+evento['musica']+'" data-recepcao="'+evento['recepcao']+'" data-santaceia="'+evento['santaceia']+'" data-santaceia_distribuicao="'+evento['santaceia_distribuicao']+'" data-leitores="'+evento['leitores']+'" data-departamento="'+evento['departamento']+'" data-data="'+dataAtualFormatada(evento['data'])+' às '+evento['horario']+'" data-endereco="'+evento['endereco']+'"';
+            //alert(evento['lat']);
+            if(evento['lat'])
+              content+=' data-lat="'+evento['lat']+'"';
+            if(evento['lon'])
+              content+=' data-lon="'+evento['lon']+'"';
+            if(evento['nome']!='outro')
+              content+=' data-nome="'+evento['nome']+'"';
+            if(evento['localidade']!='')
+              content+=' data-localidade="'+evento['localidade']+'"';
+            content+='><div class="message-avatar"><img src="images/';
+            switch(evento['departamento']) {
+                case '0':
+                    content += 'culto.png';
+                    break;
+                case '1':
+                    content += 'reuniao.png';
+                    break;
+                case '2':
+                    content+='estudo.png';
+                    break;
+                case '3':
+                    content+='escola_biblica.png';
+                    break;
+                case '4':
+                    content+='jovens.png';
+                    break;
+                case '5':
+                    content+='leigos.png';
+                    break;
+                case '6':
+                    content+='servas.png';
+                    break;
+                default:
+                    content+='evento.png';
+                    break;
+            }
+            content+='" alt=""></div><div class="message-body"><div class="message-body-heading"><h5>'+evento['titulo'];
+            //var d = new Date(evento['data']).toDateString();
+            var d = new Date(evento['data']);
+            var mi=d.getMonth();
+            d=d.getDate()+1;
+            var h = new Date();
+            var mh=h.getMonth();
+            h=h.getDate();
+            if((d==h)&&(mi==mh))
+              content+='<span class="unread">Hoje</span>';
+            content+='</h5><span>';
+            var dataInicio = new Date(evento['data']);
+            var dataFim = new Date();//declarando uma variável com o valor de 1 dia
+            var umdia = 1000 * 60 * 60 * 24;//declarando uma variávell com a diferença entre as datas
+            var c = parseInt(dataInicio.getTime() - dataFim.getTime());//declarando uma variável com os dias dessa diferença 
+            var d = (c / umdia);
+            if(d<6)
+              content+=diaSemana(evento['data']);
+            else
+              content+=dataAtualFormatada(evento['data']);
+            content+='</span><br><span style="margin-top:-10px;font-size: 85%">às '+evento['horario']+'</span></div><p style="font-size: 85%;">'+evento['descricao'].substring(0,80);
+            if(evento['descricao'].length>80)
+              content+='...';
+            //local
+            content+='</p></div></a></li>';
+          });
+       
+        })
+        .fail(function(message) {
+          //_('alert-app').innerHTML='Não foi possível atualizar as postagens, verifique a sua conexão ou tente mais tarde!';
+          //$('#alert-app').show();
+          //$('#alert-app').delay(6000).fadeOut( "slow", function() {
+          document.getElementById("status_agenda").style.display='none';
+          });
+        jqxhr.complete(function(message) {
+          document.getElementById("status_agenda").innerHTML='';
+          if(content=='')
+            content='';
+          else
+            content+='</ul></div></div></div></div></div></div>';
+            /*content+='</div></div>';*/
+          document.getElementById("div-wall-agenda").innerHTML=content;
+          document.getElementById("status_agenda").style.display='none';
+          //_("agenda-panel-app").innerHTML='Eventos da'
+          //if(_('div-agenda').style.display=='block')
+          //lista_congregacao(_('codigo').innerHTML);
+          //msgs_naolidas();
+        });
+        //lista_posts();
+    }; 
+
+    function msgs_naolidas()
+    {
+      var id=_('codigo').innerHTML;
+      var jqxhr = $.getJSON("http://dallagnol40123.com.br/dallaws/index.php?funcao=msgs_naolidas&id="+id, function(message) {
+      })
+      .done(function(message) 
+      {
+        if(message!='')
+        {
+          if((message[0]['count']!='')&&(message[0]['count']!='0'))
+          {
+            _('count_naolidas').style.display='';
+            _('count_naolidas').innerHTML=message[0]['count'];
+          }
+          else
+          {
+            _('count_naolidas').style.display='none';
+          }
+        }
+      })
+      .fail(function(jqxhr, textStatus, error){
+        _('count_naolidas').style.display='none';
+      });    
+    }
+
+    function lista_congregacao(congregacao){
+      document.getElementById("status_agenda").style.display='block';
+      var jqxhr = $.getJSON("http://paroquia10.esy.es/paroquiaws/index.php?funcao=lista_congregacao&id="+congregacao, function(message) {
+        })
+        .done(function(message) {
+          //document.getElementById("div-local").innerHTML='';
+          message.forEach(function(congregacao){
+            _('congregacao').innerHTML=congregacao['nome'];
+            _('local_nome').innerHTML=congregacao['nome'];
+            //_('local_descricao').innerHTML=congregacao['descricao'];
+            _('local_local').innerHTML = '<span class="menu-icon fa fa-map-marker bigger-125" style="color: #072d52;"></span><a href="google.navigation:q='+congregacao['lat']+','+congregacao['lon']+'">  '+congregacao['localidade']+'</a>';
+            //_('congregacao_selecionada').innerHTML='Selecionado: '+congregacao['nome'];
+            //_('agenda-panel-app').innerHTML='Eventos da: '+congregacao['nome'];
+            //_('local_descricao').innerHTML=congregacao['descricao'];
+          });
+        })
+        .fail(function(message) {
+          document.getElementById("div-local").innerHTML= '<h3>Não foi possível localizar a congregação.</h3><center>';
+        });
+        jqxhr.complete(function(message) {
+          document.getElementById("status_agenda").style.display='none';
+          //_('congregacao_local').style.display='block';
+          //lista_congregacoes();
+          lista_eventos(_('codigo').innerHTML);
+        });
+    };
+
+    function lista_congregacoes(){
+      //$('#modal-alert-success').iziModal('open');
+      var content='';
+      document.getElementById("status_congregacao").style.display='block';
+      var jqxhr = $.getJSON("http://paroquia10.esy.es/paroquiaws/index.php?funcao=lista_congregacoes", function(message) {
+        })
+        .done(function(message) {
+          /*content='<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1">';*/
+          content='<div class="container"><div class="row"><div class="col-xs-12" style="padding-right:0px;padding-left:0px;"><div class="chat_container"><div class="job-box"><div class="inbox-message"><ul>';
+          message.forEach(function(congregacao){
+            content+='<li><a id="congregacao_'+congregacao['id']+'" onclick="seleciona_congregacao('+congregacao['id']+');"';
+            content+='><div class="message-avatar"><img src="images/';
+            content+='congregacao.png';
+            content+='" alt="" style="border-radius:0px"></div><div class="message-body"><div class="message-body-heading"><h5>'+congregacao['nome'];
+            content+='</h5></div><p style="font-size: 85%;">'+congregacao['localidade'].substring(0,100);
+            if(congregacao['localidade'].length>100)
+              content+='...';
+            content+='</p></div></a></li>';
+          });
+       
+        })
+        .fail(function(message) {
+          //_('alert-app').innerHTML='Não foi possível atualizar as postagens, verifique a sua conexão ou tente mais tarde!';
+          //$('#alert-app').show();
+          //$('#alert-app').delay(6000).fadeOut( "slow", function() {
+          //$('#modal-alert').iziModal('open');
+          alert(JSON.stringify(message));
+            _('mensagem_notificacao_erro').innerHTML=message['responseText'].trim();
+            _('notificacao_erro').style.display='block';
+          });
+        jqxhr.complete(function(message) {
+          document.getElementById("status_congregacao").innerHTML='';
+          if(content=='')
+          {
+            _('mensagem_notificacao_erro').innerHTML=message['responseText'].trim();
+            _('notificacao_erro').style.display='block';
+          }
+          else
+          {
+            content+='</ul></div></div></div></div></div></div>';
+            /*content+='</div></div>';*/
+            //content+='<center style="color: #62748F">Não encontrou a sua?<a href="http://paroquia10.esy.es/admin/create.php" style="color: #62748F"> Criar conta</a><br><a href="teste">Entrar</a></center>';
+          }
+          document.getElementById("div-wall-congregacoes").innerHTML= content;
+          document.getElementById("status_congregacao").style.display='none';
+          //msgs_naolidas();
+          
+        });
+    }; 
+		
+	</script>
+  <script src="js/pulltorefresh.js"></script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    console.log("Will the service worker register?");
+    navigator.serviceWorker.register('service-worker.js')
+      .then(function(reg){
+        console.log("Yes, it did.");
+      }).catch(function(err) {
+        console.log("No it didn't. This happened: ", err)
+      });
+  }
+</script>
+  
+</html>

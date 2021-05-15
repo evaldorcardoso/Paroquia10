@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>Paroquia10 - Evento</title>
+	<link rel="manifest" href="manifest.json">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <!-- CSS Files -->
+  <link href="assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="assets/demo/demo.css" rel="stylesheet" />
+</head>
+<body class="">
+  <div class="wrapper">
+
+    <div class="sidebar" data-color="rose" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
+      <div class="logo">
+        <a href="http://www.paroquia10.com" class="simple-text logo-normal">
+          <img src="images/icone_transp_compl.png" style="width:80px">
+        </a>
+      </div>
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+          <li id="li_inicio" class="nav-item">
+            <a class="nav-link" href="index.html" >
+              <i class="material-icons"></i>
+              <p>Início</p>
+            </a>
+          </li>
+          <li id="li_entrar" class="nav-item">
+            <a class="nav-link" href="index.html?action=login">
+              <i class="material-icons"></i>
+              <p>Entrar</p>
+            </a>
+          </li>
+          <li id="li_alterar" class="nav-item" style="display: none;">
+            <a class="nav-link" href="admin.html">
+              <i class="material-icons"></i>
+              <p>Alterar</p>
+            </a>
+          </li>
+          <li id="li_sair" class="nav-item">
+            <a class="nav-link" href="#" onclick="onDelete();">
+              <i class="material-icons"></i>
+              <p>Sair</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <img src="images/icone_transp.png" style="width:25px">
+            <a class="navbar-brand" href="#">Paróquia10</a>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+          </button>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+
+
+    <div class="container" style="margin-top: 90px;padding:0">
+      <div class="alert alert-danger" id="notificacao_erro" style="display: none">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <i class="material-icons">close</i>
+        </button>
+        <span id="mensagem_notificacao_erro">This is a notification with close button.</span>
+      </div>
+      <div class="alert alert-success" id="notificacao_ok" style="display: none">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <i class="material-icons">close</i>
+        </button>
+        <span id="mensagem_notificacao_ok">This is a notification with close button.</span>
+      </div>
+      <div class="col-md-12" style="padding: 0">
+        <input id="id" type="text" style="display: none;">
+        <input id="id_congregacao" type="text" style="display: none;">
+        <center>
+          <div id="status_evento"><img src="images/giphy.gif" style="height: 15px;margin-top: 0px;"></div>
+        </center>
+        <div class="card card-stats">
+          <div id="card_header" class="card-header card-header-rose card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">date_range</i>
+            </div>
+            <p id="data_view" class="card-category"></p>
+            <p id="hora_view" class="card-category"></p>
+            <h3 id="titulo_view1" class="card-title"></h3>
+            <h6 id="titulo2_view1" style="color: black;text-transform: none;font-weight: 100;display: none">Nome da Congregação</h6>
+          </div>
+          <div class="card-body" style="text-align: left;">
+            <div class="row" id="div_ver_evento">
+              <div class="col-md-12">
+                <div class="info info-horizontal">
+                  <div class="description">
+                    <h4 class="info-title">Congregação Emanuel</h4>
+                  </div>
+                </div>
+                    <div class="info info-horizontal">
+                      <div class="description">
+                        <h4 id="titulo_view2" class="info-title"></h4>
+                        <p id="descricao_view" class="description"></p>
+                      </div>
+                    </div>
+                    <div class="info info-horizontal">
+                      <div class="icon icon-info">
+                        <i class="material-icons">group</i>
+                      </div>
+                      <div class="description">
+                        <h4 class="info-title">Auxiliares</h4>
+                        <p id="auxiliares_view" class="description"></p>
+                      </div>
+                    </div>
+                    <div class="info info-horizontal">
+                      <div class="icon icon-info">
+                        <i class="material-icons">bookmarks</i>
+                      </div>
+                      <div class="description">
+                        <h4 class="info-title">Leituras</h4>
+                        <p id="leituras_view" class="description"></p>
+                      </div>
+                    </div>
+                    <div class="info info-horizontal">
+                      <div class="icon icon-info">
+                        <i class="material-icons">music_note</i>
+                      </div>
+                      <div class="description">
+                        <h4 class="info-title">Música</h4>
+                        <p id="musica_view" class="description"></p>
+                      </div>
+                    </div>
+                  </div>
+            </div>
+
+            <form id="form_evento" style="display: none">              
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Título do evento</label>
+                    <input id="titulo" type="text" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group bmd-form-group is-filled">
+                    <label class="bmd-label-floating">Data</label>
+                    <input id="data" type="date" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group bmd-form-group is-filled">
+                    <label class="bmd-label-floating">Hora</label>
+                    <input id="hora" type="time" class="form-control">
+                  </div>
+                </div>
+              </div>              
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <div class="form-group">
+                      <label>Descrição do evento</label>
+                      <textarea id="descricao" class="form-control" rows="4"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Local do evento</label>
+                    <input id="endereco" type="text" class="form-control">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <div class="form-group">
+                      <label>Auxiliares</label>
+                      <textarea id="auxiliares" class="form-control" rows="5"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <div class="form-group">
+                      <label>Leituras</label>
+                      <textarea id="leituras" class="form-control" rows="5"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <div class="form-group">
+                      <label>Músicas</label>
+                      <textarea id="musica" class="form-control" rows="3"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button type="button" onclick="salvarEvento();" class="btn btn-rose pull-right">salvar<div class="ripple-container"></div></button>
+            </form>
+          </div>
+          <div id="card_footer" class="card-footer">            
+            <div class="icon icon-info">
+              <i class="material-icons">place</i>
+            </div>
+            <p id="endereco_view" class="description"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+
+  </div>
+  <!--   Core JS Files   -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="assets/js/core/popper.min.js"></script>
+  <script src="assets/js/core/bootstrap-material-design.min.js"></script>
+  <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <script src="assets/js/material-dashboard.js?v=2.1.1.2" type="text/javascript"></script>
+  <script src="assets/js/plugins/moment.min.js"></script>
+  <script src="assets/js/plugins/arrive.min.js"></script>
+  <script src="js/funcoes_gerais.js"></script>
+
+  <script type="text/javascript">
+    //window.location.reload(true);
+    var data = {};
+    $(document).ready(function()
+    {
+      initDB();
+      var query = location.search.slice(1);
+      var partes = query.split('&');      
+      partes.forEach(function (parte) {
+        var chaveValor = parte.split('=');
+        var chave = chaveValor[0];
+        var valor = chaveValor[1];
+        data[chave] = valor;
+      });
+
+      //console.log(data['id']); // Object {lang: "pt", page: "home"}          
+
+      if(data['id']!='')
+      {        
+        lista_evento(data['id']);
+      }
+      else
+      {
+        novo_evento();
+      }
+    });
+
+    function diaSemana(valor)
+    {
+        var semana = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+        var dateParts = valor.split("-");
+        var dt = new Date(dateParts[0], dateParts[1] - 1, dateParts[2].substr(0,2));
+        var dia = dt.getDay();
+        return(semana[dia]);
+    }
+
+    function dataAtualFormatada(valor)
+    {
+        //var data = new Date(valor);
+        var dateParts = valor.split("-");
+        var data = new Date(dateParts[0], dateParts[1] - 1, dateParts[2].substr(0,2));
+        var dia = data.getDate();
+        if (dia.toString().length == 1)
+            dia = "0"+dia;
+        var mes = data.getMonth()+1;
+        if (mes.toString().length == 1)
+            mes = "0"+mes;
+        var ano = data.getFullYear();  
+
+        var d = new Date(valor);
+        var mi=d.getMonth();
+        d=d.getDate()+1;
+        var h = new Date();
+        var mh=h.getMonth();
+        h=h.getDate();
+        if((d==h)&&(mi==mh))
+          return 'Hoje';
+        else
+          return dia+"/"+mes+"/"+ano;
+    }
+
+    function lista_evento(evento)
+    {
+      document.getElementById("status_evento").style.display='block';
+      var jqxhr = $.getJSON("https://paroquia10.com/paroquiaws/index.php?funcao=lista_evento&id="+evento, function(message) {
+        })
+        .done(function(message) {
+
+          //document.getElementById("div-local").innerHTML='';
+          message.forEach(function(evento){
+            _('id').value=evento['id'];
+            _('id_congregacao').value=evento['id_congregacao'];
+            _('data').value=evento['data'];
+            var d = new Date(evento['data']);
+            var mi=d.getMonth();
+            d=d.getDate()+1;
+            var h = new Date();
+            var mh=h.getMonth();
+            h=h.getDate();
+            var dataInicio = new Date(evento['data']);
+            var dataFim = new Date();//declarando uma variável com o valor de 1 dia
+            var umdia = 1000 * 60 * 60 * 24;//declarando uma variávell com a diferença entre as datas
+            var c = parseInt(dataInicio.getTime() - dataFim.getTime());//declarando uma variável com os dias dessa diferença 
+            var d = (c / umdia);
+            if((d==h)&&(mi==mh))
+              _('data_view').innerHTML='Hoje';
+            else if((d<6)&&(d>0))
+              _('data_view').innerHTML=diaSemana(evento['data']);
+            else
+              _('data_view').innerHTML=dataAtualFormatada(evento['data']);          
+            _('hora').value=evento['horario'];
+            _('hora_view').innerHTML='às '+evento['horario'];
+            _('titulo').value=evento['titulo'];
+            _('titulo_view1').innerHTML=evento['titulo'];
+            _('titulo_view2').innerHTML=evento['titulo'];
+            _('endereco').value=evento['endereco'];
+            _('endereco_view').innerHTML=evento['endereco'];
+            _('descricao').value=evento['descricao'];
+            _('descricao_view').innerHTML=evento['descricao'];
+            _('auxiliares').value=decodeURI(evento['auxiliares']);
+            _('auxiliares_view').innerHTML=decodeURI(evento['auxiliares']);
+            _('leituras').value=evento['leituras'];
+            _('leituras_view').innerHTML=evento['leituras'];
+            _('musica').value=evento['musica'];
+            _('musica_view').innerHTML=evento['musica'];
+          });
+        })
+        .fail(function(message) {
+          //document.getElementById("div-local").innerHTML= '<h3>Não foi possível localizar a congregação.</h3><center>';
+          alert('erro');
+        });
+        jqxhr.complete(function(message) {
+          _("status_evento").style.display='none';
+          setTimeout(function(){ document.getElementById("titulo").focus(); }, 500);          
+          //_('congregacao_local').style.display='block';
+          //lista_congregacoes();
+          //lista_eventos(_('codigo').innerHTML);
+        });
+    };
+
+    function salvarEvento()
+    {
+      if(_('id_congregacao').value=='')
+      {
+        alert('Não foi possível obter a Congregação, tente novamente!');
+        return;
+      }
+      document.getElementById("status_evento").style.display='block';      
+      var jqxhr = $.getJSON("https://paroquia10.com/paroquiaws/index.php?funcao=salvar_evento&id="+_('id').value+"&id_congregacao="+_('id_congregacao').value+"&data="+_('data').value+"&descricao="+_('descricao').value+"&titulo="+_('titulo').value+"&horario="+_('hora').value+"&endereco="+_('endereco').value+"&auxiliares="+encodeURI(_('auxiliares').value)+"&leituras="+_('leituras').value+"&musica="+_('musica').value, function(message) {
+      })
+
+      .done(function(message) {
+        _('notificacao_erro').style.display='none';
+        _('mensagem_notificacao_ok').innerHTML=decodeURI(message.trim());
+        _('notificacao_ok').style.display='block';
+        setTimeout(function () { // wait 3 seconds and reload
+          window.open(document.referrer,'_self');
+        }, 700);
+        //BuscaUsuarioLocal('evento');
+        //lista_evento()
+
+      })
+      .fail(function(message) {
+        //alert('fail');
+        _('mensagem_notificacao_erro').innerHTML=decodeURI(message['responseText'].trim());
+        _('notificacao_erro').style.display='block';
+
+      });
+      jqxhr.complete(function(message) {
+        document.getElementById("status_evento").style.display='none';       
+      });
+
+    }
+
+    function novo_evento()
+    {
+      console.log('novo');
+      _('status_evento').innerHTML='';
+      _('card_header').style.display='';
+      _('titulo_view1').innerHTML='Novo Evento';
+      _('titulo2_view1').style.display='';
+      _('titulo2_view1').innerHTML='Nome da Congregação';
+      $('#data').val(new Date().toDateInputValue());
+      
+      setTimeout(function(){ document.getElementById("titulo").focus(); }, 300);          
+      $('#data').click();
+      $('#titulo').click();
+    }
+
+    Date.prototype.toDateInputValue = (function() {
+      var local = new Date(this);
+      local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+      return local.toJSON().slice(0,10);
+    });
+
+  </script>
+
+  <script type="text/javascript">/*PAROQUIA.JS*/
+    var localDB = null;
+    function onInit()
+    {    
+        try 
+        {
+            if(!window.openDatabase) 
+            {            
+                _('notificacao_ok').style.display='none';
+                _('mensagem_notificacao_erro').innerHTML='Não foi possível buscar as suas configurações! Feche o aplicativo e tente novamente!';
+                _('notificacao_erro').style.display='block';
+                window.setTimeout(initDB(), 3000);
+            }
+            else 
+            {
+                createTables();
+                BuscaUsuarioLocal('evento');
+                _('notificacao_erro').style.display='none';
+            }
+        } 
+        catch (e) 
+        {
+            if (e == 2) {
+                updateStatus("Error: Invalid database version.");
+            }
+            else {
+                updateStatus("Error: Unknown error " + e + ".");
+            }
+            return;
+        }
+    }
+
+    function initDB()
+    {
+        var shortName = 'paroquia10';
+        var version = '1.1';
+        var displayName = 'paroquia10';
+        var maxSize = 2000; // in bytes
+        try
+        {
+          localDB = window.openDatabase(shortName, version, displayName, maxSize);
+          localDB.transaction(function (tx) {
+              onInit();
+          });
+        }
+        catch(e)
+        {
+
+        }
+
+        /*if((localDB===undefined))
+        {
+            window.setTimeout(function() {
+            if(_('conectado').innerHTML=='0'){
+                intervalo = window.setInterval(onInit,4000);            
+            }
+        }, 10);
+        }*/
+    }
+
+    function createTables()
+    {
+        var query = 'CREATE TABLE IF NOT EXISTS usuario(id INTEGER NOT NULL PRIMARY KEY, login TEXT NOT NULL, senha TEXT NOT NULL, id_congregacao INTEGER NOT NULL);';
+        try {
+            localDB.transaction(function(transaction){
+                transaction.executeSql(query, [], nullDataHandler, errorHandler);
+            });
+        } 
+        catch (e) {
+            updateStatus("Erro: Não foi possível criar a tabela 'usuario' " + e + ".");
+            return;
+        }
+    }
+
+    function onAtualiza(id,login,senha)
+    {
+        /*var query = "update usuarios set ";
+        if(codigo!='')
+            query+='codigo=?,';
+        if(nome!='')
+            query+='nome=?,';
+        if(endereco!='')
+            query+='endereco=?,';
+        if(imagem!='')
+            query+='imagem=?,';
+
+        query=query.substing(0,query.length-1)
+        query+=" where id=?;";*/
+        var query = "update usuario set login=?,senha=? where id=?;";
+            try {
+                localDB.transaction(function(transaction){
+                    transaction.executeSql(query, [codigo,id], function(transaction, results){
+                        if (!results.rowsAffected) {
+                            //updateStatus("Erro: Nenhuma congregacao atualizada com o id="+id);
+                            _('mensagem_notificacao_erro').innerHTML='Erro: Não foi possível atualizar!';
+                            _('notificacao_erro').style.display='block';
+                        }
+                        else {
+                            _('mensagem_notificacao_ok').innerHTML='Dados salvos com sucesso!';
+                            _('notificacao_ok').style.display='block';                          
+                            //updateStatus("Registro atualizado:" + results.rowsAffected);
+                        }
+                    }, errorHandler);
+                });
+            } 
+            catch (e) {
+                updateStatus("Erro: Não foi possível atualizar " + e + ".");
+            }
+    }
+
+    function onDelete()
+    {
+        try 
+        {
+            var query = "delete from usuario;";
+            localDB.transaction(function(transaction){
+                transaction.executeSql(query, [], function(transaction, results){
+                    if (!results.rowsAffected) 
+                    {
+                        alert("Erro: Nenhum usuario afetado");
+                        //_('mensagem_notificacao_erro').innerHTML='Erro: Nenhuma congregação excluída';
+                        //_('notificacao_erro').style.display='block';
+                    }
+                    else 
+                    {
+                        //_('mensagem_notificacao_ok').innerHTML='Dados excluídos com sucesso!';
+                        //_('notificacao_ok').style.display='block';
+                        //alert('excluido com sucesso');
+                        _('li_entrar').style.display='block';
+                        _('li_alterar').style.display='none';
+                        _('li_sair').style.display='none';
+                    }
+                }, errorHandler);
+            }, 
+            function(transaction, error){
+                updateStatus(error.message);
+            });
+        } 
+        catch (e) {
+            updateStatus("Error: Não foi possível buscar a congregacao " + e + ".");
+        }
+        //location.reload(); 
+    }
+
+    function onCreate(id,login,senha,id_congregacao)
+    {
+        //if (id == "" || codigo == "") {
+        //    updateStatus("Erro: 'id' e 'Codigo' são necessários!");
+       // }
+        //else {
+            var query = "insert into usuario (id, login, senha, id_congregacao) VALUES (?, ?, ?, ?);";
+            try {
+                localDB.transaction(function(transaction){
+                    transaction.executeSql(query, [id, login, senha, id_congregacao], function(transaction, results){
+                        if (!results.rowsAffected) {
+                            alert("Erro: Nenhum Registro afetado.");
+                            _('mensagem_notificacao_erro').innerHTML='Erro: Não foi possível salvar!';
+                            _('notificacao_erro').style.display='block';
+                        }
+                        else {
+                            _('li_entrar').style.display='none';
+                            _('li_alterar').style.display='block';
+                            _('li_sair').style.display='block';
+                        }
+                    }, errorHandler);
+                });
+            } 
+            catch (e) {
+                updateStatus("Erro: Não foi possivel gravar " + e + ".");
+            }
+    }
+
+    function BuscaUsuarioLocal(pagina)
+    {
+        var query = "SELECT * FROM usuario;";
+        try {
+            localDB.transaction(function(transaction){
+                transaction.executeSql(query, [], function(transaction, results){
+                    if(results.rows.length>0)
+                    {
+                        for (var i = 0; i < results.rows.length; i++) {
+                            var row = results.rows.item(i); 
+                            _('li_entrar').style.display='none';
+                            _('li_alterar').style.display='block';
+                            _('li_sair').style.display='block';
+                           _('id_congregacao').value=row['id_congregacao'];
+                            //_('card_header').style.display='none';
+                            if(data.hasOwnProperty('action'))
+                            {
+                              if((data['action']=='edit'))
+                              {
+                                _('card_footer').style.display='none';
+                                _('div_ver_evento').style.display='none';                                                  
+                                _('form_evento').style.display='';                         
+                              }
+                            }
+                            if(data.hasOwnProperty('id'))
+                            {
+                              if(data['id']=='')
+                              {
+                                _('card_footer').style.display='none';
+                                _('div_ver_evento').style.display='none';                                                  
+                                _('form_evento').style.display='';
+                              }
+                            }
+                            
+                        }
+                    }
+                    else
+                    {
+                        
+                    }
+                }, function(transaction, error){
+                    updateStatus("Erro: " + error.code + "<br>Mensagem: " + error.message);
+                });
+            });  
+        } 
+        catch (e) {
+            updateStatus("Erro: Não foi possivel buscar a congregacao " + e + ".");
+        }
+    }
+
+    errorHandler = function(transaction, error){
+        //updateStatus("Error: " + error.message);
+        //alert("Error: " + error.message);
+
+        return true;
+    }
+
+    nullDataHandler = function(transaction, results){
+    }
+
+    function updateStatus(a)
+    {
+        //alert(a);
+        _('mensagem_notificacao_erro').innerHTML=a;
+        _('notificacao_erro').style.display='block';
+        //_('notificacao_ok').style.display='none';
+    }
+  </script>
+</body>
+
+
+</html>

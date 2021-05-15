@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>Paroquia10 - Admin</title>
+	<link rel="manifest" href="manifest.json">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <!-- CSS Files -->
+  <link href="assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="assets/demo/demo.css" rel="stylesheet" />
+</head>
+<body class="">
+  <div class="wrapper">
+    <div class="sidebar" data-color="rose" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
+      <!--
+        Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+        Tip 2: you can also add an image using data-image tag
+    -->
+      <div class="logo">
+        <a href="http://www.paroquia10.com" class="simple-text logo-normal">
+          <img src="images/icone_transp_compl.png" style="width:80px">
+        </a>
+      </div>
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+          <li id="li_inicio" class="nav-item">
+            <a class="nav-link" href="index.html" onclick="muda_tela('principal');">
+              <i class="material-icons"></i>
+              <p>Início</p>
+            </a>
+          </li>
+          <li id="li_entrar" class="nav-item">
+            <a class="nav-link" href="index.html">
+              <i class="material-icons"></i>
+              <p>Entrar</p>
+            </a>
+          </li>
+          <li id="li_alterar" class="nav-item active" style="display: none;">
+            <a class="nav-link" href="#" onclick="alterar();">
+              <i class="material-icons"></i>
+              <p>Alterar</p>
+            </a>
+          </li>
+          <li id="li_sair" class="nav-item">
+            <a class="nav-link" href="#" onclick="onDelete();">
+              <i class="material-icons"></i>
+              <p>Sair</p>
+            </a>
+          </li>
+          <!--<li class="nav-item">
+            <a class="nav-link" href="/letras">
+              <i class="material-icons"></i>
+              <p>Letras</p>
+            </a>
+          </li>-->
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+          	<img src="images/icone_transp.png" style="width:25px">
+            <a class="navbar-brand" href="#">Paróquia 10</a>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+          </button>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+      <div class="content">
+        <!--<div class="container-fluid" style="padding-right:0px;padding-left:0px;">-->
+          <div class="alert alert-danger" id="notificacao_erro" style="display: none">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <i class="material-icons">close</i>
+            </button>
+            <span id="mensagem_notificacao_erro">This is a notification with close button.</span>
+          </div>
+          <div class="alert alert-success" id="notificacao_ok" style="display: none">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <i class="material-icons">close</i>
+            </button>
+            <span id="mensagem_notificacao_ok">This is a notification with close button.</span>
+          </div>
+          <div class="col-md-12" style="padding-right:0px;padding-left:0px;">
+
+            <div class="card card-profile" style="margin-bottom: 5px;">
+              <div class="card-avatar">
+                <a href="#">
+                  <img id="img_congregacao" src="images/icon_512.png" />                  
+                </a>
+              </div>              
+              <div class="card-body image-preview-input" style="margin-top: 0">
+                <a href="#foto" class="btn btn-rose btn-round image-preview-input-title" onclick="$('#imagec').click();">Alterar Foto</a>
+                <input id='imagec' type="file" accept="image/*" name="imagec"  style="display: none;"/>
+                <input id="congregacao_imagem" type="text" class="form-control image-preview-filename" disabled="disabled" 
+                style="display: none;"> <!-- don't give a name === doesn't send on POST/GET  -->
+              </div>
+            </div>
+            <div class="card ">
+              <div class="card-header ">
+                <h4 class="card-title">Área Administrativa
+                  <small class="description"></small>
+                </h4>
+              </div>
+              <div class="card-body ">
+                <center>
+                  <div id="status_congregacao"><img src="images/giphy.gif" style="height: 15px;margin-top: 0px;"></div>
+                </center>
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="card">
+                      <div class="card-header card-header-rose">
+                        <h4 class="card-title">Alterar Dados</h4>
+                        <p class="card-category">Preencha os dados da Congregação</p>
+                      </div>
+                      <div class="card-body">
+                        <form id="form_congregacao">
+                          <input id="id" name="id" type="text" style="display: none;">
+                          <div class="row">
+                            <div class="col-lg-12">
+                              <div class="form-group">
+                                <label class="bmd-label-floating">Nome da Congregação</label>
+                                <input id="nome" name="nome" type="text" class="form-control" maxLength="100">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                <label class="bmd-label-floating">Localidade</label>
+                                <input id="localidade" name="localidade" type="text" class="form-control">
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-md-10">
+                              <div class="form-group">
+                                <label class="bmd-label-floating">Pastor</label>
+                                <input id="pastor" name="pastor" type="text" class="form-control">
+                              </div>
+                            </div>
+                            <div class="col-md-2">
+                              <h4 class="title">Congregação Ativa?</h4>
+                              <div class="togglebutton">
+                                <label>
+                                  <input id="ativo" name="ativo" type="checkbox" checked="">
+                                  <span class="toggle"></span>Sim
+                                </label>
+                              </div>
+                            </div>
+                          </div><br>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <div class="form-group">
+                                  <div class="form-group">
+                                    <label>Informe algum dado adicional para identificar a sua Congregação</label><br><br>
+                                    <textarea id="descricao" name="descricao" class="form-control" rows="5"></textarea>
+                                  </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="text-center" id="div_botao">
+                            <button type="button" onclick="upload_file();/*salvarCongregacao();*/" class="btn btn-rose pull-center">Atualizar dados</button>
+                          </div>
+                          <div class="clearfix"></div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>                        
+                </div>
+              </div>
+            </div>
+          </div>
+        <!--</div>-->
+      </div>
+      <footer class="footer">
+        <div class="container-fluid">
+          <div class="copyright float-center">
+            <!--<script>
+              document.write(new Date().getFullYear())
+            </script>, made with <i class="material-icons">favorite</i> by-->
+            <a href="https://www.evaldorc.com.br" target="_blank"><img style="width: 70px;" src="https://www.evaldorc.com.br/assets/images/marca_b.png"></a>
+            <br>&copy; 2020, theme by <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <!--   Core JS Files   -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="assets/js/core/popper.min.js"></script>
+  <script src="assets/js/core/bootstrap-material-design.min.js"></script>
+  <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <script src="assets/js/material-dashboard.js?v=2.1.1.1" type="text/javascript"></script>
+  <script src="js/funcoes_gerais.js"></script>
+  <!--<script src="js/paroquia.js"></script>-->
+
+  <script>
+    var tempImage='';
+    $(document).ready(function()
+    {
+      initDB();      
+    });
+
+    function lista_congregacao(congregacao)
+    {
+      document.getElementById("status_congregacao").style.display='block';
+      var jqxhr = $.getJSON("https://paroquia10.com/paroquiaws/index.php?funcao=lista_congregacao&id="+congregacao, function(message) {
+        })
+        .done(function(message) {
+
+          //document.getElementById("div-local").innerHTML='';
+          message.forEach(function(congregacao){
+            _('id').value=congregacao['id'];
+            _('nome').value=congregacao['nome'];
+            _('localidade').value=congregacao['localidade'];
+            _('pastor').value=congregacao['pastor'];
+            _('descricao').value=congregacao['descricao'];
+            if(congregacao['ativo']=='1')
+            	$("#ativo").attr("checked");
+            else
+            	$("#ativo").removeAttr("checked");
+            console.log(congregacao['imagem']);
+            if(congregacao['imagem']!=null)
+              if(congregacao['imagem']!='')
+              {
+                _('img_congregacao').src='https://paroquia10.com/uploads/'+congregacao['imagem'];
+                _('congregacao_imagem').value=congregacao['imagem'];
+              }
+            //_('local_descricao').innerHTML=congregacao['descricao'];
+            //_('local_local').innerHTML = '<span class="menu-icon fa fa-map-marker bigger-125" style="color: #072d52;"></span><a href="google.navigation:q='+congregacao['lat']+','+congregacao['lon']+'">  '+congregacao['localidade']+'</a>';
+            //_('congregacao_selecionada').innerHTML='Selecionado: '+congregacao['nome'];
+            //_('agenda-panel-app').innerHTML='Eventos da: '+congregacao['nome'];
+            //_('local_descricao').innerHTML=congregacao['descricao'];
+          });
+        })
+        .fail(function(message) {
+          //document.getElementById("div-local").innerHTML= '<h3>Não foi possível localizar a congregação.</h3><center>';
+          alert('erro');
+        });
+        jqxhr.complete(function(message) {
+          document.getElementById("status_congregacao").style.display='none';
+          _('nome').focus();
+          //_('congregacao_local').style.display='block';
+          //lista_congregacoes();
+          //lista_eventos(_('codigo').innerHTML);
+        });
+    };
+
+    function upload_file()
+    {
+      var myform = _('form_congregacao');
+      var formdata = new FormData(myform);                
+      var file = document.getElementById('imagec').files[0];
+      formdata.append('imagec', file);
+      //console.log(formdata);
+      _("div_botao").innerHTML='<center><img src="images/giphy.gif" style="height: 15px;margin-top: 0px;"></center>';
+      if(file)
+      {
+          formdata.append('imagec', file);
+          $.ajax({
+            url: "https://paroquia10.com/paroquiaws/ajaxupload.php?tipo=congregacao&id="+_('id').value,
+            type: "POST",
+            data:  formdata,
+            contentType: false,
+            cache: false,
+            processData:false,
+            beforeSend : function()
+            {
+              //$("#preview").fadeOut();
+              //$("#err").fadeOut();
+            },
+            success: function(data)
+            {
+              console.log(data);
+              if(data=='invalid')
+              {
+                // invalid file format.
+                alert("Invalid File !");
+              }
+              else
+              {
+                //alert(data);
+                console.log(data);
+                tempImage=data.substring(3);
+                salvarCongregacao();
+              }
+            },
+            error: function(e) 
+            {
+              alert('erro');
+              console.log(e);
+            }          
+          });
+      }
+      else
+      {
+        tempImage=_('congregacao_imagem').value;
+        salvarCongregacao();
+      }
+    }
+
+    function salvarCongregacao()
+    {
+      _("div_botao").innerHTML='<center><img src="images/giphy.gif" style="height: 15px;margin-top: 0px;"></center>';
+      if($('#ativo').is(':checked'))
+      	var ativo='1';
+      else
+      	var ativo='0';
+      var jqxhr = $.getJSON("https://paroquia10.com/paroquiaws/index.php?funcao=salvar_congregacao&id="+_('id').value+"&nome="+_('nome').value+"&localidade="+_('localidade').value+"&descricao="+_('descricao').value+"&pastor="+_('pastor').value+"&lat=&lon="+"&ativo="+ativo+"&imagem="+tempImage, function(message) {
+      })
+
+      .done(function(message) {
+        _('notificacao_erro').style.display='none';
+        _('mensagem_notificacao_ok').innerHTML=decodeURI(message.trim());
+        _('notificacao_ok').style.display='block';
+        BuscaUsuarioLocal('admin');
+        console.log("https://paroquia10.com/paroquiaws/index.php?funcao=salvar_congregacao&id="+_('id').value+"&nome="+_('nome').value+"&localidade="+_('localidade').value+"&descricao="+_('descricao').value+"&pastor="+_('pastor').value+"&lat=&lon="+"&ativo="+ativo+"&imagem="+tempImage);
+        setTimeout(function(){ location.reload(); }, 1000);
+      })
+      .fail(function(message) {
+        //alert('fail');
+        _('mensagem_notificacao_erro').innerHTML=decodeURI(message['responseText'].trim());
+        _('notificacao_erro').style.display='block';
+
+      });
+      jqxhr.complete(function(message) {
+      	document.getElementById("status_congregacao").style.display='none';      	
+      });
+
+    }
+  
+    // Create the preview image
+    $(".image-preview-input input:file").change(function (){     
+        var img = $('<img/>', {
+            id: 'dynamic'
+        });      
+        var file = this.files[0];
+        var reader = new FileReader();
+        // Set preview image into the popover data-content
+        reader.onload = function (e) {
+            //$(".image-preview-input-title").text("Mudar");
+            //$(".image-preview-clear").show();
+            $("congregacao_imagem").val(file.name);            
+            //img.attr('src', e.target.result);
+            //$(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show");
+            $("#img_congregacao").attr('src', e.target.result);
+            $("#img_congregacao").attr('width', "250px");
+            $("#img_congregacao").attr('height', "250px");
+        }        
+        reader.readAsDataURL(file);
+    });
+  
+  </script>
+
+  <script type="text/javascript">/*PAROQUIA.JS*/
+		var localDB = null;
+		function onInit()
+		{    
+		    try 
+		    {
+		        if(!window.openDatabase) 
+		        {            
+		            _('notificacao_ok').style.display='none';
+		            _('mensagem_notificacao_erro').innerHTML='Não foi possível buscar as suas configurações! Feche o aplicativo e tente novamente!';
+		            _('notificacao_erro').style.display='block';
+		            window.setTimeout(initDB(), 3000);
+		        }
+		        else 
+		        {
+		            createTables();
+		            BuscaUsuarioLocal('index');
+		            _('notificacao_erro').style.display='none';
+		        }
+		    } 
+		    catch (e) 
+		    {
+		        if (e == 2) {
+		            updateStatus("Error: Invalid database version.");
+		        }
+		        else {
+		            updateStatus("Error: Unknown error " + e + ".");
+		        }
+		        return;
+		    }
+		}
+
+		function initDB()
+		{
+		    var shortName = 'paroquia10';
+		    var version = '1.1';
+		    var displayName = 'paroquia10';
+		    var maxSize = 2000; // in bytes
+		    localDB = window.openDatabase(shortName, version, displayName, maxSize);
+		    localDB.transaction(function (tx) {
+		        onInit();
+		    });
+
+		    /*if((localDB===undefined))
+		    {
+		        window.setTimeout(function() {
+		        if(_('conectado').innerHTML=='0'){
+		            intervalo = window.setInterval(onInit,4000);            
+		        }
+		    }, 10);
+		    }*/
+		}
+
+		function createTables()
+		{
+		    var query = 'CREATE TABLE IF NOT EXISTS usuario(id INTEGER NOT NULL PRIMARY KEY, login TEXT NOT NULL, senha TEXT NOT NULL, id_congregacao INTEGER NOT NULL);';
+		    try {
+		        localDB.transaction(function(transaction){
+		            transaction.executeSql(query, [], nullDataHandler, errorHandler);
+		        });
+		    } 
+		    catch (e) {
+		        updateStatus("Erro: Não foi possível criar a tabela 'usuario' " + e + ".");
+		        return;
+		    }
+		}
+
+
+		function onAtualiza(id,login,senha)
+		{
+		    /*var query = "update usuarios set ";
+		    if(codigo!='')
+		        query+='codigo=?,';
+		    if(nome!='')
+		        query+='nome=?,';
+		    if(endereco!='')
+		        query+='endereco=?,';
+		    if(imagem!='')
+		        query+='imagem=?,';
+
+
+		    query=query.substing(0,query.length-1)
+		    query+=" where id=?;";*/
+		    var query = "update usuario set login=?,senha=? where id=?;";
+		        try {
+		            localDB.transaction(function(transaction){
+		                transaction.executeSql(query, [codigo,id], function(transaction, results){
+		                    if (!results.rowsAffected) {
+		                        //updateStatus("Erro: Nenhuma congregacao atualizada com o id="+id);
+		                        _('mensagem_notificacao_erro').innerHTML='Erro: Não foi possível atualizar!';
+		                        _('notificacao_erro').style.display='block';
+		                    }
+		                    else {
+		                        _('mensagem_notificacao_ok').innerHTML='Dados salvos com sucesso!';
+		                        _('notificacao_ok').style.display='block';	                        
+		                        //updateStatus("Registro atualizado:" + results.rowsAffected);
+		                    }
+		                }, errorHandler);
+		            });
+		        } 
+		        catch (e) {
+		            updateStatus("Erro: Não foi possível atualizar " + e + ".");
+		        }
+		}
+
+		function onDelete()
+		{
+		    try 
+		    {
+		        var query = "delete from usuario;";
+		        localDB.transaction(function(transaction){
+		            transaction.executeSql(query, [], function(transaction, results){
+		                if (!results.rowsAffected) 
+		                {
+		                    alert("Erro: Nenhum usuario afetado");
+		                    //_('mensagem_notificacao_erro').innerHTML='Erro: Nenhuma congregação excluída';
+		                    //_('notificacao_erro').style.display='block';
+		                }
+		                else 
+		                {
+		                    //_('mensagem_notificacao_ok').innerHTML='Dados excluídos com sucesso!';
+		                    //_('notificacao_ok').style.display='block';
+		                    //alert('excluido com sucesso');
+		                    _('li_entrar').style.display='block';
+		                    _('li_alterar').style.display='none';
+		                    _('li_sair').style.display='none';
+                        window.location.replace("index.html");
+		                }
+		            }, errorHandler);
+		        }, 
+		        function(transaction, error){
+		            updateStatus(error.message);
+		        });
+		    } 
+		    catch (e) {
+		        updateStatus("Error: Não foi possível buscar a congregacao " + e + ".");
+		    }
+		    //location.reload(); 
+		}
+
+		function onCreate(id,login,senha,id_congregacao)
+		{
+		    //if (id == "" || codigo == "") {
+		    //    updateStatus("Erro: 'id' e 'Codigo' são necessários!");
+		   // }
+		    //else {
+		        var query = "insert into usuario (id, login, senha, id_congregacao) VALUES (?, ?, ?, ?);";
+		        try {
+		            localDB.transaction(function(transaction){
+		                transaction.executeSql(query, [id, login, senha, id_congregacao], function(transaction, results){
+		                    if (!results.rowsAffected) {
+		                        alert("Erro: Nenhum Registro afetado.");
+		                        _('mensagem_notificacao_erro').innerHTML='Erro: Não foi possível salvar!';
+		                        _('notificacao_erro').style.display='block';
+		                    }
+		                    else {
+		                        _('li_entrar').style.display='none';
+		                        _('li_alterar').style.display='block';
+		                        _('li_sair').style.display='block';
+		                    }
+		                }, errorHandler);
+		            });
+		        } 
+		        catch (e) {
+		            updateStatus("Erro: Não foi possivel gravar " + e + ".");
+		        }
+		}
+
+		function BuscaUsuarioLocal(pagina)
+		{
+		    var query = "SELECT * FROM usuario;";
+		    try {
+		        localDB.transaction(function(transaction){
+		            transaction.executeSql(query, [], function(transaction, results){
+		                if(results.rows.length>0)
+		                {
+		                    for (var i = 0; i < results.rows.length; i++) {
+		                        var row = results.rows.item(i);
+		                        _('li_entrar').style.display='none';
+		                        _('li_alterar').style.display='block';
+		                        _('li_sair').style.display='block';
+		                        var str=window.location.pathname;
+		                        if(str.includes('index.html'))
+		                        {
+		                            _('entrar_email').value=row['login'];
+		                            _('entrar_senha').value=row['senha'];
+		                            entrar();
+		                        }
+		                        if(str.includes('admin.html'))
+		                        {
+		                            lista_congregacao(row['id_congregacao']);
+		                        }	                        
+		                    }
+		                }
+		                else
+		                {
+		                    _('li_entrar').style.display='block';
+		                    _('li_alterar').style.display='none';
+		                    _('li_sair').style.display='none';
+		                }
+		            }, function(transaction, error){
+		                updateStatus("Erro: " + error.code + "<br>Mensagem: " + error.message);
+		            });
+		        });  
+		    } 
+		    catch (e) {
+		        updateStatus("Erro: Não foi possivel buscar a congregacao " + e + ".");
+		    }
+		}
+
+		errorHandler = function(transaction, error){
+		    //updateStatus("Error: " + error.message);
+		    //alert("Error: " + error.message);
+
+		    return true;
+		}
+
+		nullDataHandler = function(transaction, results){
+		}
+
+		function updateStatus(a)
+		{
+		    //alert(a);
+		    _('mensagem_notificacao_erro').innerHTML=a;
+		    _('notificacao_erro').style.display='block';
+		    //_('notificacao_ok').style.display='none';
+		}
+  </script>
+</body>
+
+
+</html>

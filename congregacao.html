@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>Paroquia10 - Congregação</title>
+	<link rel="manifest" href="manifest.json">
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+  <!-- CSS Files -->
+  <link href="assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="assets/demo/demo.css" rel="stylesheet" />
+</head>
+<body class="">
+
+  <!-- Modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Excluir Evento</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Tem certeza que deseja excluir este evento ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Agora não</button>
+          <button type="button" class="btn btn-primary" onclick="excluirEvento();">Claro, pode excluir!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrapper">
+    <div class="sidebar" data-color="rose" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
+      <!--
+        Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+        Tip 2: you can also add an image using data-image tag
+    -->
+      <div class="logo">
+        <a href="http://www.paroquia10.com" class="simple-text logo-normal">
+          <img src="images/icone_transp_compl.png" style="width:80px">
+        </a>
+      </div>
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+          <li id="li_inicio" class="nav-item">
+            <a class="nav-link" href="index.html" >
+              <i class="material-icons"></i>
+              <p>Início</p>
+            </a>
+          </li>
+          <li id="li_entrar" class="nav-item">
+            <a class="nav-link" href="index.html?action=login">
+              <i class="material-icons"></i>
+              <p>Entrar</p>
+            </a>
+          </li>
+          <li id="li_alterar" class="nav-item" style="display: none;">
+            <a class="nav-link" href="admin.html">
+              <i class="material-icons"></i>
+              <p>Alterar</p>
+            </a>
+          </li>
+          <li id="li_sair" class="nav-item">
+            <a class="nav-link" href="#" onclick="onDelete();">
+              <i class="material-icons"></i>
+              <p>Sair</p>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+        <div class="container-fluid">
+          <div class="navbar-wrapper" onclick="location.replace('index.html')">
+          	<img src="images/icone_transp.png" style="width:25px">
+            <a class="navbar-brand" href="#">Paróquia10</a>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+          </button>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+      <div class="content" style="margin-top: 50">
+        <div class="container-fluid" style="padding: 0">
+          <div class="alert alert-danger" id="notificacao_erro" style="display: none">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <i class="material-icons">close</i>
+            </button>
+            <span id="mensagem_notificacao_erro">This is a notification with close button.</span>
+          </div>
+          <div class="alert alert-success" id="notificacao_ok" style="display: none">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <i class="material-icons">close</i>
+            </button>
+            <span id="mensagem_notificacao_ok">This is a notification with close button.</span>
+          </div>
+          <div class="row">
+            <div class="col-md-12">
+              <center>
+                <div id="status_congregacao"><img src="images/giphy.gif" style="height: 15px;margin-top: 0px;"></div>
+              </center>
+              <div class="card card-profile" style="margin-bottom: 5px;">
+                <div class="card-avatar">
+                  <a href="#">
+                    <img class="img" id="img_congregacao" src="images/icon_512.png" />
+                  </a>
+                </div>
+                <div class="card-body" style="margin-top: 0">
+                  <h6 class="card-category text-gray" style="margin-top: 0" id="localidade"></h6>
+                  <h4 class="card-title" id="nome"></h4>
+                  <h5 class="card-category text-gray" style="margin-top: 0;margin-bottom: 0" id="pastor"></h5>
+                  <p class="card-description" id="descricao" style="margin-bottom: -10px;"></p>
+                  <!--<a href="#pablo" class="btn btn-rose btn-round">Follow</a>-->
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center">
+            <button id="but_novo_evento" type="button" class="btn btn-rose btn-round" style="display: none" onclick="novo_evento()">ADICIONAR NOVO EVENTO<div class="ripple-container"></div></button>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 col-md-12">
+              <div class="card">
+                <div class="card-header card-header-rose">
+                  <h5 class="card-title" style="font-size: 95%;">Próximos eventos desta congregação:</h5>
+                  <p class="card-category"></p>
+                </div>
+                <div class="card-body table-responsive">
+                  <center>
+                    <div id="status_eventos"><img src="images/giphy.gif" style="height: 15px;margin-top: 0px;"></div>
+                  </center>
+                  <table class="table table-hover">
+                    <thead class="text-rose">
+                      
+                    </thead>
+                    <tbody id="tab_eventos">
+                      
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="footer">
+        <div class="container-fluid">
+          <!--<nav class="float-left">
+            <ul>
+              <li>
+                <a href="https://www.creative-tim.com">
+                  Creative Tim
+                </a>
+              </li>
+              <li>
+                <a href="https://creative-tim.com/presentation">
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a href="http://blog.creative-tim.com">
+                  Blog
+                </a>
+              </li>
+              <li>
+                <a href="https://www.creative-tim.com/license">
+                  Licenses
+                </a>
+              </li>
+            </ul>
+          </nav>-->
+          <div class="copyright float-center">
+            <!--<script>
+              document.write(new Date().getFullYear())
+            </script>, made with <i class="material-icons">favorite</i> by-->
+            <a href="https://www.evaldorc.com.br" target="_blank"><img style="width: 70px;" src="https://www.evaldorc.com.br/assets/images/marca_b.png"></a>
+            <br>&copy; 2020, theme by <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+  <!--   Core JS Files   -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="assets/js/core/popper.min.js"></script>
+  <script src="assets/js/core/bootstrap-material-design.min.js"></script>
+  <script src="assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <script src="assets/js/material-dashboard.js?v=2.1.1.1" type="text/javascript"></script>
+  <script src="js/funcoes_gerais.js"></script>
+
+  <script type="text/javascript">
+   var data = {};
+   var id_delete='';
+    $(document).ready(function()
+    {
+      var query = location.search.slice(1);
+      var partes = query.split('&');
+      
+      partes.forEach(function (parte) {
+        var chaveValor = parte.split('=');
+        var chave = chaveValor[0];
+        var valor = chaveValor[1];
+        data[chave] = valor;
+      });
+
+      //console.log(data['id']); // Object {lang: "pt", page: "home"}
+      lista_congregacao(data['id']);
+      initDB();
+    });
+
+    $('#deleteModal').on('hidden.bs.modal', function () {
+      id_delete='';
+    });
+    
+    function diaSemana(valor)
+    {
+        var semana = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+        var dateParts = valor.split("-");
+        var dt = new Date(dateParts[0], dateParts[1] - 1, dateParts[2].substr(0,2));
+        var dia = dt.getDay();
+        return(semana[dia]);
+    }
+
+    function dataAtualFormatada(valor)
+    {
+        //var data = new Date(valor);
+        var dateParts = valor.split("-");
+        var data = new Date(dateParts[0], dateParts[1] - 1, dateParts[2].substr(0,2));
+        var dia = data.getDate();
+        if (dia.toString().length == 1)
+            dia = "0"+dia;
+        var mes = data.getMonth()+1;
+        if (mes.toString().length == 1)
+            mes = "0"+mes;
+        var ano = data.getFullYear();  
+
+        var d = new Date(valor);
+        var mi=d.getMonth();
+        d=d.getDate()+1;
+        var h = new Date();
+        var mh=h.getMonth();
+        h=h.getDate();
+        if((d==h)&&(mi==mh))
+          return 'Hoje';
+        else
+          return dia+"/"+mes+"/"+ano;
+    }
+
+    function seleciona_evento(id_evento,acao)
+    {
+      switch (acao) {
+        case 1:
+          location.href='/evento.html?id='+id_evento+'&action=edit';
+          break;
+        default:
+          location.href='/evento.html?id='+id_evento;
+      }
+    }
+
+    function novo_evento()
+    {
+      location.href='/evento.html?id='; 
+    }
+
+    function lista_congregacao(congregacao)
+    {
+      document.getElementById("status_congregacao").style.display='block';
+      var jqxhr = $.getJSON("https://paroquia10.com/paroquiaws/index.php?funcao=lista_congregacao&id="+congregacao, function(message) {
+        })
+        .done(function(message) {
+
+          //document.getElementById("div-local").innerHTML='';
+          message.forEach(function(congregacao){
+            _('nome').innerHTML=congregacao['nome'];
+            _('localidade').innerHTML=congregacao['localidade'];
+            _('pastor').innerHTML='Pastor: '+congregacao['pastor'];
+            _('descricao').innerHTML=congregacao['descricao'];
+            if(congregacao['ativo']=='1')
+              $("#ativo").attr("checked");
+            else
+              $("#ativo").removeAttr("checked");
+            if(congregacao['imagem']!=null)
+              if(congregacao['imagem']!='')
+              {
+                _('img_congregacao').src='https://paroquia10.com/uploads/'+congregacao['imagem'];
+                //_('congregacao_imagem').value=congregacao['imagem'];
+              }
+            //_('local_descricao').innerHTML=congregacao['descricao'];
+            //_('local_local').innerHTML = '<span class="menu-icon fa fa-map-marker bigger-125" style="color: #072d52;"></span><a href="google.navigation:q='+congregacao['lat']+','+congregacao['lon']+'">  '+congregacao['localidade']+'</a>';
+            //_('congregacao_selecionada').innerHTML='Selecionado: '+congregacao['nome'];
+            //_('agenda-panel-app').innerHTML='Eventos da: '+congregacao['nome'];
+            //_('local_descricao').innerHTML=congregacao['descricao'];
+            //lista_eventos(congregacao['id']);
+          });
+        })
+        .fail(function(message) {
+          //document.getElementById("div-local").innerHTML= '<h3>Não foi possível localizar a congregação.</h3><center>';
+          alert('erro');
+        });
+        jqxhr.complete(function(message) {
+          document.getElementById("status_congregacao").style.display='none';
+          _('nome').focus();
+          //_('congregacao_local').style.display='block';
+          //lista_congregacoes();
+          //lista_eventos(_('codigo').innerHTML);
+        });
+    };
+
+    function lista_eventos_congregacao_admin(congregacao)
+    {
+      var content='';
+      var ultimo_dia='';
+      var estilo='default';
+      var estilo_painel='widget-color-grey';
+      var imagem='images/events-icon-orange-.png';
+      document.getElementById("status_eventos").style.display='block';
+      var jqxhr = $.getJSON("https://paroquia10.com/paroquiaws/index.php?funcao=lista_eventos_congregacao_admin&id_congregacao="+congregacao, function(message) {
+        })
+        .done(function(message) {
+          /*content='<div class="row"><div class="col-xs-12 col-sm-10 col-sm-offset-1">';*/
+          content='';
+          message.forEach(function(evento){
+            var dataInicio = new Date(evento['data']+' '+evento['horario']);
+            var dataFim = new Date();//declarando uma variável com o valor de 1 dia
+            if(dataInicio<dataFim)
+              astyle='background-color: lightpink;';
+            else
+              astyle='';
+            content+='<tr>';
+            content+='<td class="td-name"><a style="font-size:130%" href="#" onclick="seleciona_evento('+evento['id']+');">'+evento['titulo']+'</a>';
+            content+='<br>';
+            if(dataInicio<dataFim)
+              content+='<span class="badge badge-danger"><i class="material-icons">warning</i></span>';            
+            content+='<small style="font-size:90%;color: #999;font-weight: 300;">';            
+            //console.log(evento['id']);
+            var d = new Date(evento['data']+' '+evento['horario']);
+            var mi=d.getMonth();
+            d=d.getDate();
+            var h = new Date();
+            var mh=h.getMonth();
+            h=h.getDate();
+            var umdia = 1000 * 60 * 60 * 24;//declarando uma variávell com a diferença entre as datas
+            var c = parseInt(dataInicio.getTime() - dataFim.getTime());//declarando uma variável com os dias dessa diferença 
+            var f = (c / umdia);
+            //content+='<td style="font-size: 10px;font-weight: 500;">';
+            /*console.log('d='+d);
+            console.log('h='+h);
+            console.log('mi='+mi);
+            console.log('mh='+mh);*/
+            console.log(f);
+            if((d===h)&&(mi==mh))
+              content+='Hoje';
+            else if((f<6)&&(f>0))
+              content+=diaSemana(evento['data']);
+            else
+              content+=dataAtualFormatada(evento['data']);
+            content+=' às '+evento['horario'];
+            content+='</small>';
+            content+='</td>';
+            content+='<td class="td-actions text-right">';
+            content+='<i class="material-icons" style="color: #ff9800;" onclick="seleciona_evento('+evento['id']+',1);">edit</i>';
+            content+='<i class="material-icons" style="padding-left: 10px;color: #f44336;" data-toggle="modal" data-target="#deleteModal" onclick="id_delete='+evento['id']+';">delete</i>';
+            content+='</td>';
+            content+='</tr>';
+          });       
+        })
+        .fail(function(message) {
+          alert('erro');
+          document.getElementById("status_eventos").style.display='none';
+          });
+        jqxhr.complete(function(message) {
+          document.getElementById("status_eventos").innerHTML='';
+          document.getElementById("tab_eventos").innerHTML=content;
+          document.getElementById("status_eventos").style.display='none';
+        });
+    };
+
+    function lista_eventos(congregacao){
+      var content='';
+      var ultimo_dia='';
+      var estilo='default';
+      var estilo_painel='widget-color-grey';
+      var imagem='images/events-icon-orange-.png';
+      document.getElementById("status_eventos").style.display='block';
+      var jqxhr = $.getJSON("https://paroquia10.com/paroquiaws/index.php?funcao=lista_eventos_congregacao&id_congregacao="+congregacao, function(message) {
+        })
+        .done(function(message) {
+          message.forEach(function(evento){
+            var dataInicio = new Date(evento['data']);
+            var dataFim = new Date();//declarando uma variável com o valor de 1 dia
+            content+='<tr>';
+            content+='<td class="td-name"><a style="font-size:130%" href="#" onclick="seleciona_evento('+evento['id']+');">'+evento['titulo']+'</a>';
+            content+='<br><small style="font-size:90%;color: #999;font-weight: 300;">';            
+            var d = new Date(evento['data']);
+            var mi=d.getMonth();
+            d=d.getDate()+1;
+            var h = new Date();
+            var mh=h.getMonth();
+            h=h.getDate();
+            var umdia = 1000 * 60 * 60 * 24;//declarando uma variávell com a diferença entre as datas
+            var c = parseInt(dataInicio.getTime() - dataFim.getTime());//declarando uma variável com os dias dessa diferença 
+            var d = (c / umdia);
+            //content+='<td style="font-size: 10px;font-weight: 500;">';
+            if((d==h)&&(mi==mh))
+              content+='Hoje';
+            else if((d<6)&&(d>0))
+              content+=diaSemana(evento['data']);
+            else
+              content+=dataAtualFormatada(evento['data']);
+            content+=' às '+evento['horario'];
+            content+='</small>';
+            content+='</td>';
+            content+='</tr>';
+          });       
+        })
+        .fail(function(message) {
+          
+          document.getElementById("status_eventos").style.display='none';
+          });
+        jqxhr.complete(function(message) {
+          document.getElementById("status_eventos").innerHTML='';
+          document.getElementById("tab_eventos").innerHTML=content;
+          document.getElementById("status_eventos").style.display='none';
+        });
+    }; 
+    
+    function excluirEvento()
+    {
+      var jqxhr = $.getJSON("https://paroquia10.com/paroquiaws/index.php?funcao=exclui_evento&id="+id_delete, function(message) {
+      })
+
+      .done(function(message) {
+        _('notificacao_erro').style.display='none';
+        if(decodeURI(message)=='true')        
+        {
+          $('#deleteModal').modal('hide');
+          _('mensagem_notificacao_ok').innerHTML='Excluído com sucesso!'
+          _('notificacao_ok').style.display='block';
+          setTimeout(function () { // wait seconds and reload
+            location.reload();
+          }, 900);
+        }
+        else if(decodeURI(message)=='false')        
+        {
+          _('mensagem_notificacao_erro').innerHTML='Não foi possível excluir este evento!';
+          _('notificacao_erro').style.display='block';
+        }
+      })
+      .fail(function(message) {
+        //alert('fail');
+        _('mensagem_notificacao_erro').innerHTML=decodeURI(message['responseText'].trim());
+        _('notificacao_erro').style.display='block';
+
+      });
+      jqxhr.complete(function(message) {
+        //      
+      });
+
+    }
+  
+  </script>
+
+	<script type="text/javascript">/*PAROQUIA.JS*/
+	    var localDB = null;
+	    function onInit()
+	    {    
+	        try 
+	        {
+	            if(!window.openDatabase) 
+	            {            
+	                _('notificacao_ok').style.display='none';
+	                _('mensagem_notificacao_erro').innerHTML='Não foi possível buscar as suas configurações! Feche o aplicativo e tente novamente!';
+	                _('notificacao_erro').style.display='block';
+	                window.setTimeout(initDB(), 3000);
+	            }
+	            else 
+	            {
+	                createTables();
+	                BuscaUsuarioLocal('congregacao');
+	                _('notificacao_erro').style.display='none';
+	            }
+	        } 
+	        catch (e) 
+	        {
+	            if (e == 2) {
+	                updateStatus("Error: Invalid database version.");
+	            }
+	            else {
+	                updateStatus("Error: Unknown error " + e + ".");
+	            }
+	            return;
+	        }
+	    }
+
+	    function initDB()
+	    {
+	        var shortName = 'paroquia10';
+	        var version = '1.1';
+	        var displayName = 'paroquia10';
+	        var maxSize = 2000; // in bytes
+          try
+          {
+            localDB = window.openDatabase(shortName, version, displayName, maxSize);
+            localDB.transaction(function (tx) {
+                onInit();
+            });
+          }
+          catch(e)
+          {
+            lista_eventos(data['id']);
+          }
+
+	        /*if((localDB===undefined))
+	        {
+	            window.setTimeout(function() {
+	            if(_('conectado').innerHTML=='0'){
+	                intervalo = window.setInterval(onInit,4000);            
+	            }
+	        }, 10);
+	        }*/
+	    }
+
+	    function createTables()
+	    {
+	        var query = 'CREATE TABLE IF NOT EXISTS usuario(id INTEGER NOT NULL PRIMARY KEY, login TEXT NOT NULL, senha TEXT NOT NULL, id_congregacao INTEGER NOT NULL);';
+	        try {
+	            localDB.transaction(function(transaction){
+	                transaction.executeSql(query, [], nullDataHandler, errorHandler);
+	            });
+	        } 
+	        catch (e) {
+	            updateStatus("Erro: Não foi possível criar a tabela 'usuario' " + e + ".");
+	            return;
+	        }
+	    }
+
+	    function onAtualiza(id,login,senha)
+	    {
+	        /*var query = "update usuarios set ";
+	        if(codigo!='')
+	            query+='codigo=?,';
+	        if(nome!='')
+	            query+='nome=?,';
+	        if(endereco!='')
+	            query+='endereco=?,';
+	        if(imagem!='')
+	            query+='imagem=?,';
+
+	        query=query.substing(0,query.length-1)
+	        query+=" where id=?;";*/
+	        var query = "update usuario set login=?,senha=? where id=?;";
+	            try {
+	                localDB.transaction(function(transaction){
+	                    transaction.executeSql(query, [codigo,id], function(transaction, results){
+	                        if (!results.rowsAffected) {
+	                            //updateStatus("Erro: Nenhuma congregacao atualizada com o id="+id);
+	                            _('mensagem_notificacao_erro').innerHTML='Erro: Não foi possível atualizar!';
+	                            _('notificacao_erro').style.display='block';
+	                        }
+	                        else {
+	                            _('mensagem_notificacao_ok').innerHTML='Dados salvos com sucesso!';
+	                            _('notificacao_ok').style.display='block';                          
+	                            //updateStatus("Registro atualizado:" + results.rowsAffected);
+	                        }
+	                    }, errorHandler);
+	                });
+	            } 
+	            catch (e) {
+	                updateStatus("Erro: Não foi possível atualizar " + e + ".");
+	            }
+	    }
+
+	    function onDelete()
+	    {
+	        try 
+	        {
+	            var query = "delete from usuario;";
+	            localDB.transaction(function(transaction){
+	                transaction.executeSql(query, [], function(transaction, results){
+	                    if (!results.rowsAffected) 
+	                    {
+	                        alert("Erro: Nenhum usuario afetado");
+	                        //_('mensagem_notificacao_erro').innerHTML='Erro: Nenhuma congregação excluída';
+	                        //_('notificacao_erro').style.display='block';
+	                    }
+	                    else 
+	                    {
+	                        //_('mensagem_notificacao_ok').innerHTML='Dados excluídos com sucesso!';
+	                        //_('notificacao_ok').style.display='block';
+	                        //alert('excluido com sucesso');
+	                        _('li_entrar').style.display='block';
+	                        _('li_alterar').style.display='none';
+	                        _('li_sair').style.display='none';
+                          window.location.replace("index.html");
+	                    }
+	                }, errorHandler);
+	            }, 
+	            function(transaction, error){
+	                updateStatus(error.message);
+	            });
+	        } 
+	        catch (e) {
+	            updateStatus("Error: Não foi possível buscar a congregacao " + e + ".");
+	        }
+	        //location.reload(); 
+	    }
+
+	    function onCreate(id,login,senha,id_congregacao)
+	    {
+	        //if (id == "" || codigo == "") {
+	        //    updateStatus("Erro: 'id' e 'Codigo' são necessários!");
+	       // }
+	        //else {
+	            var query = "insert into usuario (id, login, senha, id_congregacao) VALUES (?, ?, ?, ?);";
+	            try {
+	                localDB.transaction(function(transaction){
+	                    transaction.executeSql(query, [id, login, senha, id_congregacao], function(transaction, results){
+	                        if (!results.rowsAffected) {
+	                            alert("Erro: Nenhum Registro afetado.");
+	                            _('mensagem_notificacao_erro').innerHTML='Erro: Não foi possível salvar!';
+	                            _('notificacao_erro').style.display='block';
+	                        }
+	                        else {
+	                            _('li_entrar').style.display='none';
+	                            _('li_alterar').style.display='block';
+	                            _('li_sair').style.display='block';
+	                        }
+	                    }, errorHandler);
+	                });
+	            } 
+	            catch (e) {
+	                updateStatus("Erro: Não foi possivel gravar " + e + ".");
+	            }
+	    }
+
+	    function BuscaUsuarioLocal(pagina)
+	    {
+	        var query = "SELECT * FROM usuario;";
+	        try {
+	            localDB.transaction(function(transaction){
+	                transaction.executeSql(query, [], function(transaction, results){
+	                    if(results.rows.length>0)
+	                    {
+	                        for (var i = 0; i < results.rows.length; i++) {
+	                            var row = results.rows.item(i);
+	                            _('li_entrar').style.display='none';
+	                            _('li_alterar').style.display='block';
+	                            _('li_sair').style.display='block';
+	                            var str=window.location.pathname;
+	                            if(str.includes('index.html'))
+	                            {
+	                              _('entrar_email').value=row['login'];
+	                              _('entrar_senha').value=row['senha'];
+	                              entrar();
+	                            }
+	                            else if(str.includes('admin.html'))
+	                            {
+	                              lista_eventos_congregacao_admin(row['id_congregacao']);
+	                            }
+	                            else if(str.includes('congregacao.html'))
+	                            {
+	                            	if(data['id']==row['id_congregacao'])      
+	                            	{
+	                              		_('but_novo_evento').style.display='';
+	                              		lista_eventos_congregacao_admin(row['id_congregacao']);
+	                              	}
+	                            }                         
+	                        }
+	                    }
+	                    else
+	                    {
+	                        _('li_entrar').style.display='block';
+	                        _('li_alterar').style.display='none';
+	                        _('li_sair').style.display='none';
+                          lista_eventos(data['id']);
+	                    }
+	                }, function(transaction, error){
+	                    updateStatus("Erro: " + error.code + "<br>Mensagem: " + error.message);
+	                });
+	            });  
+	        } 
+	        catch (e) {
+	            updateStatus("Erro: Não foi possivel buscar a congregacao " + e + ".");
+	        }
+	    }
+
+	    errorHandler = function(transaction, error){
+	        //updateStatus("Error: " + error.message);
+	        //alert("Error: " + error.message);
+
+	        return true;
+	    }
+
+	    nullDataHandler = function(transaction, results){
+	    }
+
+	    function updateStatus(a)
+	    {
+	        //alert(a);
+	        _('mensagem_notificacao_erro').innerHTML=a;
+	        _('notificacao_erro').style.display='block';
+	        //_('notificacao_ok').style.display='none';
+	    }
+  	</script>
+</body>
+
+
+</html>
